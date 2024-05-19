@@ -126,11 +126,14 @@ li:hover {
 	margin-bottom: 1em;
 }
 
+/* Filtres */
+
 .liste-filtres{
-	margin: 70px 0 40px;
+	margin: 60px 0 50px;
 	display: flex;
-	width: 50%;
+	width: 55%;
 	justify-content: center;
+	margin-inline: auto;
 }
 
 .filtre{
@@ -141,7 +144,17 @@ li:hover {
 	border: 1px solid #1D6154;
 	border-radius: 60px;
 	padding: 10px;
+	margin: 0 5px;
+	min-width: 100px;
 }
+
+.filtre-selection{
+	color: white;
+	background-color: #1D6154;
+}
+
+
+/* Gallery */
 
 .gallery {
 	width: 100%;
@@ -155,6 +168,8 @@ li:hover {
 	width: 100%;
 
 }
+
+/* Formulaire de contact */
 
 #contact {
 	width: 50%;

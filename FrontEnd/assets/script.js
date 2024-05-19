@@ -16,10 +16,16 @@ let filtres = document.querySelector (".liste-filtres");
 
 //Création des élements Filtres
 function generationFiltres(){
+    let filtre =  document.createElement("button");
+    filtre.classList.add("filtre","filtre-selection")
+    filtre.innerText = "Tous";
+    filtre.type = "button";
+    filtres.appendChild(filtre);
     for (let i=0; i < categories.length; i++){
         let filtre =  document.createElement("button");
-        filtre.classList.add("filtre" + [i],"filtre")
+        filtre.classList.add("filtre")
         filtre.innerText = categories[i].name;
+        filtre.type = "button";
         filtres.appendChild(filtre);
     }
 }
