@@ -1,11 +1,11 @@
 //Appel des API en JSON
 
-const reponseWorks = await fetch("http://localhost:5678/api/works")
-const works = await reponseWorks.json()
+const reponseWorks = await fetch("http://localhost:5678/api/works");
+const works = await reponseWorks.json();
+console.log(works);
 
-const reponseCategories = await fetch("http://localhost:5678/api/categories")
-const categories = await reponseCategories.json()
-console.log(categories)
+const reponseCategories = await fetch("http://localhost:5678/api/categories");
+const categories = await reponseCategories.json();
 
 
 //Récupération de la .gallery et du .filtres du html
@@ -17,13 +17,13 @@ let filtres = document.querySelector (".liste-filtres");
 //Création des élements Filtres
 function generationFiltres(){
     let filtre =  document.createElement("button");
-    filtre.classList.add("filtre","filtre-selection")
+    filtre.classList.add("filtre","filtre-all","filtre-selection")
     filtre.innerText = "Tous";
     filtre.type = "button";
     filtres.appendChild(filtre);
     for (let i=0; i < categories.length; i++){
         let filtre =  document.createElement("button");
-        filtre.classList.add("filtre")
+        filtre.classList.add("filtre","filtre-" + categories[i].id);
         filtre.innerText = categories[i].name;
         filtre.type = "button";
         filtres.appendChild(filtre);
@@ -47,9 +47,33 @@ function generationGallery() {
     }
 }
 
-
 //Appel des fonctions
-generationFiltres();
-generationGallery();
+await generationFiltres();
+await generationGallery();
+
+//Récupération des bouttons
+const btn0 = document.querySelector (".filtre-0");
+const btn1 = document.querySelector (".filtre-1");
+const btn2 = document.querySelector (".filtre-2");
+const btnTous = document.querySelector (".filtre-all");
+const listeBtn = [btn0, btn1, btn2];
+
+
+//Création des élements de la Gallery selon le filtre pressé
+
+for (let i = 0; i < listeBtn.length; i++) {
+    listeBtn[i].addEventListener ("click", ()=> {
+        classList.remove("filtre-selection")
+        listeBtn[i].classList.add("filtre-selection");
+    });
+}
+
+//Exception faite pour le boutton filtre "Tous"
+
+btnTous.addEventListener("click", () => {
+    gallery.innerHTML = "";
+    generationGallery();
+})
+
 
 
