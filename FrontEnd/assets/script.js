@@ -61,12 +61,25 @@ const listeBtn = [btn0, btn1, btn2];
 
 //Création des élements de la Gallery selon le filtre pressé
 
-for (let i = 0; i < listeBtn.length; i++) {
-    listeBtn[i].addEventListener ("click", ()=> {
-        classList.remove("filtre-selection")
-        listeBtn[i].classList.add("filtre-selection");
+for (let i = 1; i < listeBtn.length; i++) {
+    listeBtn[i].addEventListener("click", () => {
+        // Effacer le contenu de la balise cartes
+        gallery.innerHTML = "";
+
+        let boite = document.createElement("figure");
+
+        let image = document.createElement("img")
+        image.src = works.categoryId[i].image;
+        boite.appendChild(image)
+
+        let titre = document.createElement("figcaption");
+        titre.innerText = categoryId[i].nom;
+        boite.appendChild(titre);
+
+        gallery.appendChild(boite);
     });
 }
+
 
 //Exception faite pour le boutton filtre "Tous"
 
