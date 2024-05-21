@@ -91,13 +91,26 @@ nav ul {
 
 }
 nav li {
-	padding: 0 10px;
+	padding: 0 20px;
 	font-size: 1.2em;
+}
+
+nav a {
+	text-decoration: none;
+	color: black;
+}
+
+nav img {
+	width: 25px;
 }
 
 li:hover {
 	color: #B1663C;
 }
+nav a:hover {
+	color: #B1663C;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
