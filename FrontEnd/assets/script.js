@@ -69,11 +69,11 @@ for (let i = 1; i < listeBtn.length; i++) {
         let boite = document.createElement("figure");
 
         let image = document.createElement("img")
-        image.src = works.categoryId[i].image;
+        image.src = works[i].image;
         boite.appendChild(image)
 
         let titre = document.createElement("figcaption");
-        titre.innerText = categoryId[i].nom;
+        titre.innerText = works[i].name;
         boite.appendChild(titre);
 
         gallery.appendChild(boite);
