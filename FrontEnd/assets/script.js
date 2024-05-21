@@ -36,6 +36,7 @@ function generationGallery() {
     for (let i = 0; i < works.length; i++) {
         let boite = document.createElement("figure");
         gallery.appendChild(boite)
+        console.log(boite)
 
         let image = document.createElement("img")
         image.src = works[i].imageUrl;
@@ -44,8 +45,10 @@ function generationGallery() {
         let titre = document.createElement("figcaption");
         titre.innerText = works[i].title;
         boite.appendChild(titre);
+        titre.setAttribute("id", works[i].categoryId);
     }
 }
+
 
 //Appel des fonctions
 await generationFiltres();
@@ -87,6 +90,8 @@ btnTous.addEventListener("click", () => {
     gallery.innerHTML = "";
     generationGallery();
 })
+
+
 
 
 
