@@ -1,97 +1,92 @@
-//Appel des API en JSON
-
+// Appel des API en JSON
 const reponseWorks = await fetch("http://localhost:5678/api/works");
 const works = await reponseWorks.json();
-console.log(works);
 
 const reponseCategories = await fetch("http://localhost:5678/api/categories");
 const categories = await reponseCategories.json();
 
+// Récupération de la galerie et du conteneur des filtres du HTML
+let gallery = document.querySelector(".gallery");
+let filtresContainer = document.querySelector(".liste-filtres");
 
-//Récupération de la .gallery et du .filtres du html
-let gallery = document.querySelector (".gallery");
-let filtres = document.querySelector (".liste-filtres");
+// Création des éléments filtres
+function generationFiltres() {
+    // Création du filtre "Tous"
+    let filtreTous = document.createElement("button");
+    filtreTous.classList.add("filtre", "filtre-all", "filtre-selection");
+    filtreTous.innerText = "Tous";
+    filtreTous.type = "button";
+    filtresContainer.appendChild(filtreTous);
 
-
-
-//Création des élements Filtres
-function generationFiltres(){
-    let filtre =  document.createElement("button");
-    filtre.classList.add("filtre","filtre-all","filtre-selection")
-    filtre.innerText = "Tous";
-    filtre.type = "button";
-    filtres.appendChild(filtre);
-    for (let i=0; i < categories.length; i++){
-        let filtre =  document.createElement("button");
-        filtre.classList.add("filtre","filtre-" + categories[i].id);
+    // Création des filtres pour chaque catégorie
+    for (let i = 0; i < categories.length; i++) {
+        let filtre = document.createElement("button");
+        filtre.classList.add("filtre", "filtre-" + categories[i].id);
         filtre.innerText = categories[i].name;
         filtre.type = "button";
-        filtres.appendChild(filtre);
+        filtresContainer.appendChild(filtre);
     }
 }
 
-
-//Création des élements Gallery
+// Création des éléments galerie
 function generationGallery() {
     for (let i = 0; i < works.length; i++) {
         let boite = document.createElement("figure");
-        gallery.appendChild(boite)
-        console.log(boite)
+        gallery.appendChild(boite);
+        boite.classList.add("boite", "boite-" + works[i].categoryId);
 
-        let image = document.createElement("img")
+        let image = document.createElement("img");
         image.src = works[i].imageUrl;
-        boite.appendChild(image)
+        boite.appendChild(image);
 
         let titre = document.createElement("figcaption");
         titre.innerText = works[i].title;
         boite.appendChild(titre);
-        titre.setAttribute("id", works[i].categoryId);
     }
 }
 
-
-//Appel des fonctions
+// Appel des fonctions
 await generationFiltres();
 await generationGallery();
 
-//Récupération des bouttons
-const btn0 = document.querySelector (".filtre-0");
-const btn1 = document.querySelector (".filtre-1");
-const btn2 = document.querySelector (".filtre-2");
-const btnTous = document.querySelector (".filtre-all");
-const listeBtn = [btn0, btn1, btn2];
+// Récupération des boutons de filtre
+const btnTous = document.querySelector(".filtre-all");
+const listeBtn = document.querySelectorAll(".filtre");
 
-
-//Création des élements de la Gallery selon le filtre pressé
-
-for (let i = 1; i < listeBtn.length; i++) {
-    listeBtn[i].addEventListener("click", () => {
-        // Effacer le contenu de la balise cartes
+// Ajout d'un écouteur d'événement sur chaque bouton de filtre
+listeBtn.forEach((btn) => {
+    btnTous.addEventListener("click", ()=>{
+        filtresContainer.innerHTML = "";
+        generationFiltres()
         gallery.innerHTML = "";
-
-        let boite = document.createElement("figure");
-
-        let image = document.createElement("img")
-        image.src = works[i].image;
-        boite.appendChild(image)
-
-        let titre = document.createElement("figcaption");
-        titre.innerText = works[i].name;
-        boite.appendChild(titre);
-
-        gallery.appendChild(boite);
+        generationGallery();
     });
-}
+    btn.addEventListener("click", () => {
+        // Suppression de la classe "filtre-selection" sur tous les boutons
+        listeBtn.forEach((btn) => {
+            btn.classList.remove("filtre-selection");
+        });
 
+        // Ajout de la classe "filtre-selection" sur le bouton cliqué
+        btn.classList.add("filtre-selection");
 
-//Exception faite pour le boutton filtre "Tous"
+        // Masquage de toutes les boites
+        const boites = document.querySelectorAll(".boite");
+        boites.forEach((boite) => {
+            boite.style.display = "none";
+        });
 
-btnTous.addEventListener("click", () => {
-    gallery.innerHTML = "";
-    generationGallery();
-})
+        // Affichage des boites correspondant au filtre cliqué
+        const boitesFiltre = document.querySelectorAll(".boite-" + btn.classList[1].split("-")[1]);
+        boitesFiltre.forEach((boite) => {
+            boite.style.display = "block";
+        });
 
-
-
-
-
+        // Si le bouton "Tous" est cliqué, affichage de toutes les boites
+        if (btn.classList[1] === "all") {
+            boites.forEach((boite) => {
+                boite.style.display = "block";
+            });
+        }
+    });
+});
