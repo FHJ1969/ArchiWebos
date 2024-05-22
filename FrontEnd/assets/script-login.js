@@ -10,6 +10,16 @@ form.addEventListener('submit', (event) => {
     if (email === 'sophie.bluel@test.tld' && mdp === 'S0phie') {
         window.location.href = 'index-admin.html';
     } else {
-        alert('E-mail ou mot de passe incorrect');
+        alert('Erreur dans l’identifiant ou le mot de passe');
     }
 });
+
+//Communiquer l'identifiant et le mot de passe à l'API
+const reponseUsers = await fetch("http://localhost:5678/api/users/login")
+const Users = await reponseUsers.json();
+console.log(Users);
+
+
+
+
+
