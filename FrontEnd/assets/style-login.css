@@ -10,3 +10,9 @@ main {
 #contact {
     width: 35%;
 }
+
+.lien-mdp {
+    text-align: center;
+    text-decoration: underline;
+    color: black;
+}
