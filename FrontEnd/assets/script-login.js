@@ -4,20 +4,45 @@ const mdpInput = document.querySelector('#mdp');
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
-
     const email = emailInput.value;
     const mdp = mdpInput.value;
-    if (email === 'sophie.bluel@test.tld' && mdp === 'S0phie') {
-        window.location.href = 'index-admin.html';
-    } else {
-        alert('Erreur dans l’identifiant ou le mot de passe');
-    }
+
+    // Créer un objet avec les valeurs de l'email et du mot de passe
+    const userData = {
+        email: email,
+        password: mdp
+    };
+
+    // Convertir l'objet en chaîne JSON
+    const jsonData = JSON.stringify(userData);
+
+    // Faire une requête à l'API
+    fetch('http://localhost:5678/api/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: jsonData
+    })
+        .then(response => {
+            // Vérifier si la réponse de l'API indique une connexion réussie
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Erreur dans l’identifiant ou le mot de passe');
+            }
+        })
+        .then(data => {
+            // Rediriger vers la page "index-admin" si la connexion est réussie
+            window.location.href = 'index-admin.html';
+        })
+        .catch(error => {
+            // Afficher un message d'erreur si la connexion échoue
+            alert(error.message);
+        });
 });
 
-//Communiquer l'identifiant et le mot de passe à l'API
-const reponseUsers = await fetch("http://localhost:5678/api/users/login")
-const Users = await reponseUsers.json();
-console.log(Users);
+
 
 
 
