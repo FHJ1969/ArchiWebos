@@ -1,22 +1,18 @@
 .lien-login{
     font-weight: bold;
 }
-
 main {
     margin-top: 10em;
     width: 100%;
 }
-
 #contact {
     width: 35%;
 }
-
 .lien-mdp {
     text-align: center;
     text-decoration: underline;
     color: black;
 }
-
 footer {
     margin-top: 15em;
     width: 100%;

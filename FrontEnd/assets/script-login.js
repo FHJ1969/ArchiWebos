@@ -7,16 +7,16 @@ form.addEventListener('submit', (event) => {
     const email = emailInput.value;
     const mdp = mdpInput.value;
 
-    // Créer un objet avec les valeurs de l'email et du mot de passe
+    // Création d'un objet avec les valeurs de l'email et du mot de passe
     const userData = {
         email: email,
         password: mdp
     };
 
-    // Convertir l'objet en chaîne JSON
+    // Convertir l'objet en JSON
     const jsonData = JSON.stringify(userData);
 
-    // Faire une requête à l'API
+    // Requête à l'API
     fetch('http://localhost:5678/api/users/login', {
         method: 'POST',
         headers: {
@@ -41,6 +41,7 @@ form.addEventListener('submit', (event) => {
             alert(error.message);
         });
 });
+
 
 
 

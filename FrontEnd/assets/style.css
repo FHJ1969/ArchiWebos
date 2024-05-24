@@ -61,7 +61,6 @@ header {
 section {
 	margin: 50px 0
 }
-
 h1{
 	display: flex;
 	flex-direction: column;
@@ -70,14 +69,12 @@ h1{
 	font-weight: 800;
 	color: #B1663C
 }
-
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
 ;
 }
-
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -123,7 +120,6 @@ nav a:hover {
 	margin: auto;
 	width: 80%;
 }
-
 #introduction article {
 	flex: 1
 }
@@ -148,7 +144,6 @@ nav a:hover {
 	justify-content: center;
 	margin-inline: auto;
 }
-
 .filtre{
 	font-size: 16px;
 	font-weight: bold;
@@ -160,7 +155,6 @@ nav a:hover {
 	margin: 0 5px;
 	min-width: 100px;
 }
-
 .filtre-selection{
 	color: white;
 	background-color: #1D6154;
@@ -176,17 +170,15 @@ nav a:hover {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
-
 .gallery img {
 	width: 100%;
-
 }
 
 /* Formulaire de contact */
 
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -201,7 +193,6 @@ margin: auto;
 	display: flex;
 	flex-direction: column;
 }
-
 #contact input {
 	height: 50px;
 	font-size: 1.2em;
@@ -215,7 +206,6 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -226,8 +216,6 @@ input[type="submit"]{
 	text-align: center;
 	border-radius: 60px ;
 }
-
-
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
