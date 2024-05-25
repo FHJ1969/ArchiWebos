@@ -8,19 +8,26 @@ const categories = await reponseCategories.json();
 let gallery = document.querySelector(".gallery");
 let filtresContainer = document.querySelector(".liste-filtres");
 
+await generationFiltres();
+await generationGallery();
+
 // Création des éléments filtres
 function generationFiltres() {
     let filtreTous = document.createElement("button");
     filtreTous.classList.add("filtre", "filtre-all", "filtre-selection");
+    filtreTous.dataset.categoryId = "";
     filtreTous.innerText = "Tous";
     filtreTous.type = "button";
+    filtreTous.addEventListener("click", filterProject )
     filtresContainer.appendChild(filtreTous);
 
     for (let i = 0; i < categories.length; i++) {
         let filtre = document.createElement("button");
-        filtre.classList.add("filtre", "filtre-" + categories[i].id);
+        filtre.classList.add("filtre");
         filtre.innerText = categories[i].name;
         filtre.type = "button";
+        filtre.dataset.categoryId = categories[i].id;
+        filtre.addEventListener("click", filterProject )
         filtresContainer.appendChild(filtre);
     }
 }
@@ -30,8 +37,8 @@ function generationGallery() {
     for (let i = 0; i < works.length; i++) {
         let boite = document.createElement("figure");
         gallery.appendChild(boite);
-        boite.classList.add("boite", "boite-" + works[i].categoryId);
-
+        //boite.classList.add("boite", "boite-" + works[i].categoryId);
+        boite.dataset.categoryId = works[i].categoryId
         let image = document.createElement("img");
         image.src = works[i].imageUrl;
         boite.appendChild(image);
@@ -42,49 +49,24 @@ function generationGallery() {
     }
 }
 
-// Appel des fonctions pour l'affichage dynamique des filtres et de la gallery
-await generationFiltres();
-await generationGallery();
-
-// Récupération des bouttons de filtre
-const btnTous = document.querySelector(".filtre-all");
-const listeBtn = document.querySelectorAll(".filtre");
 
 //Affichage de la gallery approprié selon le filtre pressé
-listeBtn.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        // Supprimer de la classe "filtre-selection" sur tous les bouttons
-        listeBtn.forEach((btn) => {
-            btn.classList.remove("filtre-selection");
-        });
+function filterProject (event) {
+        let categoryTargetId = event.target.dataset.categoryId;
+        const boites = document.querySelectorAll(".gallery figure");
+        console.log(boites);
+        document.querySelectorAll(".liste-filtres button").forEach(element => {
+            element.classList.remove("filtre-selection")
+        })
+        event.target.classList.add("filtre-selection");
+        boites.forEach(boite => {
+            if (boite.dataset.categoryId == categoryTargetId || categoryTargetId == "" ) {
+                boite.style.display = "block";
+            } else {
+                boite.style.display = "none";
+            }
+        })
+}
 
-        // Réatributtion de la classe "filtre-selection"
-        btn.classList.add("filtre-selection");
 
-        // Masquage de toutes les boites
-        const boites = document.querySelectorAll(".boite");
-        boites.forEach((boite) => {
-            boite.style.display = "none";
-        });
 
-        // Affichage des boites correspondant au filtre cliqué
-        const boitesFiltre = document.querySelectorAll(".boite-" + btn.classList[1].split("-")[1]);
-        boitesFiltre.forEach((boite) => {
-            boite.style.display = "block";
-        });
-    });
-});
-
-//Affichage à part pour le filtre "Tous"
-btnTous.addEventListener("click", () => {
-    // Afficher tous les éléments de la gallery après le click
-    const galleryItems = document.querySelectorAll(".gallery figure");
-    for (let i = 0; i < galleryItems.length; i++) {
-        galleryItems[i].style.display = "block";
-    }
-
-    // Réinitialiser le filtre-selection
-    const filtreSelection = document.querySelector(".filtre-selection");
-    filtreSelection.classList.remove("filtre-selection");
-    btnTous.classList.add("filtre-selection");
-});

@@ -34,13 +34,15 @@ form.addEventListener('submit', (event) => {
         })
         .then(data => {
             // Rediriger vers la page "index-admin" si la connexion est réussie
-            window.location.href = 'index-admin.html';
+            localStorage.setItem('userConnected', JSON.stringify(data));
+            window.location.href = 'index.html';
         })
         .catch(error => {
             // Afficher un message d'erreur si la connexion échoue
             alert(error.message);
         });
 });
+
 
 
 
