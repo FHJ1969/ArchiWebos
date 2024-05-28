@@ -12,28 +12,30 @@ await generationFiltres();
 await generationGallery();
 
 // Création des éléments filtres
-export function generationFiltres() {
-    let filtreTous = document.createElement("button");
-    filtreTous.classList.add("filtre", "filtre-all", "filtre-selection");
-    filtreTous.dataset.categoryId = "";
-    filtreTous.innerText = "Tous";
-    filtreTous.type = "button";
-    filtreTous.addEventListener("click", filterProject )
-    filtresContainer.appendChild(filtreTous);
+function generationFiltres() {
+    if (localStorage.getItem('userConnected') === null) {
+        let filtreTous = document.createElement("button");
+        filtreTous.classList.add("filtre", "filtre-all", "filtre-selection");
+        filtreTous.dataset.categoryId = "";
+        filtreTous.innerText = "Tous";
+        filtreTous.type = "button";
+        filtreTous.addEventListener("click", filterProject )
+        filtresContainer.appendChild(filtreTous);
 
-    for (let i = 0; i < categories.length; i++) {
-        let filtre = document.createElement("button");
-        filtre.classList.add("filtre");
-        filtre.innerText = categories[i].name;
-        filtre.type = "button";
-        filtre.dataset.categoryId = categories[i].id;
-        filtre.addEventListener("click", filterProject )
-        filtresContainer.appendChild(filtre);
+        for (let i = 0; i < categories.length; i++) {
+            let filtre = document.createElement("button");
+            filtre.classList.add("filtre");
+            filtre.innerText = categories[i].name;
+            filtre.type = "button";
+            filtre.dataset.categoryId = categories[i].id;
+            filtre.addEventListener("click", filterProject )
+            filtresContainer.appendChild(filtre);
+        }
     }
 }
 
 // Création des éléments galerie
-export function generationGallery() {
+function generationGallery() {
     for (let i = 0; i < works.length; i++) {
         let boite = document.createElement("figure");
         gallery.appendChild(boite);
