@@ -66,6 +66,3 @@ function filterProject (event) {
             }
         })
 }
-
-
-

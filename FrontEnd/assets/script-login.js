@@ -46,22 +46,3 @@ form.addEventListener('submit', (event) => {
             alert(error.message);
         })
 });
-
-function adminIndex() {
-    if (localStorage.getItem('userConnected')){
-        loginElement.innerText = "logout"
-        loginElement.href = "index.html";
-    } else {
-        loginElement.innerText = "login"
-        loginElement.href = "index-login.html";
-    }
-}
-loginElement.addEventListener('click', (event) => {
-    if (localStorage.getItem('userConnected')) {
-        localStorage.removeItem('userConnected');
-    }
-})
-
-adminIndex()
-
-
