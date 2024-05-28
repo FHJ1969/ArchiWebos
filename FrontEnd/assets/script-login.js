@@ -1,6 +1,7 @@
 const form = document.querySelector('#contact form');
 const emailInput = document.querySelector('#email');
 const mdpInput = document.querySelector('#mdp');
+const loginElement = document.querySelector('.login');
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -32,22 +33,35 @@ form.addEventListener('submit', (event) => {
                 throw new Error('Erreur dans l’identifiant ou le mot de passe');
             }
         })
+
         .then(data => {
-            // Rediriger vers la page "index-admin" si la connexion est réussie
+            // Rediriger vers la page index si la connexion est réussie
             localStorage.setItem('userConnected', JSON.stringify(data));
             window.location.href = 'index.html';
+
         })
+
         .catch(error => {
             // Afficher un message d'erreur si la connexion échoue
             alert(error.message);
-        });
+        })
 });
 
+function adminIndex() {
+    if (localStorage.getItem('userConnected')){
+        loginElement.innerText = "logout"
+        loginElement.href = "index.html";
+    } else {
+        loginElement.innerText = "login"
+        loginElement.href = "index-login.html";
+    }
+}
+loginElement.addEventListener('click', (event) => {
+    if (localStorage.getItem('userConnected')) {
+        localStorage.removeItem('userConnected');
+    }
+})
 
-
-
-
-
-
+adminIndex()
 
 

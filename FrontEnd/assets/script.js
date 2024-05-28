@@ -12,7 +12,7 @@ await generationFiltres();
 await generationGallery();
 
 // Création des éléments filtres
-function generationFiltres() {
+export function generationFiltres() {
     let filtreTous = document.createElement("button");
     filtreTous.classList.add("filtre", "filtre-all", "filtre-selection");
     filtreTous.dataset.categoryId = "";
@@ -33,7 +33,7 @@ function generationFiltres() {
 }
 
 // Création des éléments galerie
-function generationGallery() {
+export function generationGallery() {
     for (let i = 0; i < works.length; i++) {
         let boite = document.createElement("figure");
         gallery.appendChild(boite);
@@ -54,7 +54,6 @@ function generationGallery() {
 function filterProject (event) {
         let categoryTargetId = event.target.dataset.categoryId;
         const boites = document.querySelectorAll(".gallery figure");
-        console.log(boites);
         document.querySelectorAll(".liste-filtres button").forEach(element => {
             element.classList.remove("filtre-selection")
         })
