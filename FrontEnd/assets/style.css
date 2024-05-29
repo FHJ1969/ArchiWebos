@@ -267,17 +267,50 @@ footer nav ul {
 	width: 38%;
 	border-radius: 15px;
 }
+.modal-content h3{
+	text-align: center;
+	font-size: 26px;
+	margin: 50px 0 25px;
+}
+.modal-content h4{
+	font-family: 'Syne';
+	font-weight: bold;
+	font-size: 14px;
+	background-color: #1D6154;
+	color: white;
+	width: 250px;
+	padding: 13px;
+	border-radius: 60px;
+	text-align: center;
+	cursor: pointer;
+	margin: 25px auto;
+}
 
 .fa-xmark {
-	color: #aaaaaa;
+	color: #000000;
 	float: right;
 	font-size: 23px;
 	font-weight: bold;
+	margin-right: 8px;
 }
 
 .fa-xmark:hover,
 .fa-xmark:focus {
-	color: #000;
+	color: #aaaaaa;
 	text-decoration: none;
 	cursor: pointer;
+}
+.modale-liste-boites{
+	padding: 40px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.boite-modale {
+	width: 15%;
+	margin: 10px;
+}
+
+.boite-modale img{
+	width: 100%;
+	height: auto;
 }

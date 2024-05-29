@@ -1,3 +1,5 @@
+const reponseWork = await fetch("http://localhost:5678/api/works");
+const work = await reponseWork.json();
 //Modification des éléments selon la présence ou non de 'userConnected' en localStorage
 const loginElement = document.querySelector('.login');
 const listeFiltres = document.querySelector('.liste-filtres');
@@ -56,4 +58,21 @@ window.addEventListener('click', function(event) {
         modal.style.display = "none";
     }
 });
+
+const listeBoites = document.querySelector('.modale-liste-boites');
+function galleryModale() {
+    for (let i = 0; i < work.length; i++) {
+        const boiteModale = document.createElement("figure");
+        boiteModale.classList.add('boite-modale')
+        listeBoites.appendChild(boiteModale);
+        //boite.classList.add("boite", "boite-" + works[i].categoryId);
+        boiteModale.dataset.categoryId = work[i].categoryId
+        let image = document.createElement("img");
+        image.src = work[i].imageUrl;
+        boiteModale.appendChild(image);
+
+        listeBoites.appendChild(boiteModale);
+    }
+}
+galleryModale()
 
