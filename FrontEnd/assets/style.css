@@ -121,7 +121,7 @@ nav a:hover {
 	width: 80%;
 }
 #introduction article {
-	flex: 1
+	flex: 1;
 }
 #introduction h2 {
 	margin-bottom: 1em;
@@ -148,6 +148,10 @@ nav a:hover {
 	background: none;
 	border: none;
 	cursor: pointer;
+}
+
+.page-modifier{
+
 }
 
 /* Filtres */

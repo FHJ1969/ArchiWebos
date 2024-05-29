@@ -12,12 +12,13 @@ if (localStorage.getItem('userConnected')) {
 
     const modifierIcone = document.createElement("i");
     modifierIcone.className = "fa-regular fa-pen-to-square";
+    modifierIcone.classList.add("modifier");
     mesProjets.appendChild(modifierIcone);
 
     const modifier = document.createElement("button");
     modifier.innerText = "modifier";
     mesProjets.appendChild(modifier);
-    modifier.classList.add('btn-modifier')
+    modifier.classList.add('btn-modifier','modifier')
 
 } else {
 //Affichage normal si non connecté
@@ -30,4 +31,10 @@ loginElement.addEventListener('click', (event) => {
     if (localStorage.getItem('userConnected')) {
         localStorage.removeItem('userConnected');
     }
+})
+
+const btnModifier = document.querySelector('.modifier');
+btnModifier.addEventListener('click', (event) => {
+    const pageModifier = document.createElement('div');
+    pageModifier.classList.add("page-modifier");
 })
