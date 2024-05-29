@@ -33,8 +33,27 @@ loginElement.addEventListener('click', (event) => {
     }
 })
 
-const btnModifier = document.querySelector('.modifier');
-btnModifier.addEventListener('click', (event) => {
-    const pageModifier = document.createElement('div');
-    pageModifier.classList.add("page-modifier");
-})
+// Sélectionnez le bouton modifier et la boîte de dialogue modale
+const btnModifier = document.querySelector('.btn-modifier');
+const modal = document.getElementById('modal');
+
+// Ajoutez un événement clic au bouton modifier
+btnModifier.addEventListener('click', function() {
+    // Ouvrez la boîte de dialogue modale
+    modal.style.display = "block";
+});
+
+// Sélectionnez le bouton de fermeture et ajoutez un événement clic
+const span = document.querySelector(".fa-xmark");
+span.addEventListener('click', function() {
+    // Fermez la boîte de dialogue modale
+    modal.style.display = "none";
+});
+
+// Fermez la boîte de dialogue modale lorsque l'utilisateur clique en dehors de celle-ci
+window.addEventListener('click', function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+});
+
