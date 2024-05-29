@@ -133,13 +133,13 @@ nav a:hover {
 
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin: 4em 0 2em;
 }
 
 /* Filtres */
 
 .liste-filtres{
-	margin: 60px 0 50px;
+	margin: 0 0 50px;
 	display: flex;
 	width: 55%;
 	justify-content: center;

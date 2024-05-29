@@ -5,7 +5,7 @@ const listeFiltres = document.querySelector('.liste-filtres');
 if (localStorage.getItem('userConnected')){
     loginElement.innerText = "logout"
     loginElement.href = "index.html";
-    listeFiltres.innerHTML = "";
+    listeFiltres.style.display = "none";
 } else {
     loginElement.innerText = "login"
     loginElement.href = "index-login.html";
