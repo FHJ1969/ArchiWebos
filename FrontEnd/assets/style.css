@@ -135,6 +135,20 @@ nav a:hover {
 	text-align: center;
 	margin: 4em 0 2em;
 }
+.fa-pen-to-square{
+	color: black;
+	font-size: 0.5em;
+	margin-left: 1.7em;
+	cursor: pointer;
+}
+
+.btn-modifier{
+	font-family: 'Work Sans';
+	color: black;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
 
 /* Filtres */
 
