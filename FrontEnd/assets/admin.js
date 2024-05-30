@@ -1,3 +1,5 @@
+const reponseWork = await fetch("http://localhost:5678/api/works");
+const work = await reponseWork.json();
 const loginElement = document.querySelector('.login');
 const listeFiltres = document.querySelector('.liste-filtres');
 

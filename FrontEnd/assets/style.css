@@ -331,3 +331,9 @@ footer nav ul {
 	border-radius: 2px;
 	cursor: pointer;
 }
+
+/* Formulaire ajout photo */
+
+.formulaire-modale{
+	display: none;
+}

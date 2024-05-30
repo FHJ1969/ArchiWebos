@@ -2,11 +2,11 @@ const reponseWork = await fetch("http://localhost:5678/api/works");
 const work = await reponseWork.json();
 const loginElement = document.querySelector('.login');
 const listeFiltres = document.querySelector('.liste-filtres');
-//Création de la page modale
 const btnModifier = document.querySelector('.btn-modifier');
 const modal = document.getElementById('modal');
 const modaleTitre = document.querySelector('.modal-content h3');
 const ajoutPhoto = document.querySelector('.modal-content h4');
+const formulaireModale = document.querySelector('.formulaire-modale');
 
 btnModifier.addEventListener('click', function() {
     // Ouvrez la boîte de dialogue modale
@@ -77,6 +77,7 @@ function galleryModale() {
             modaleTitre.innerText = "Ajout photo";
             ajoutPhoto.innerText = "Valider";
             listeBoites.style.display = "none";
+            formulaireModale.style.display = "block";
         })
     }
 }

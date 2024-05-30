@@ -12,9 +12,6 @@
 		  integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
 		  crossorigin="anonymous" referrerpolicy="no-referrer">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script type="module" src="assets/script.js" defer></script>
-	<script type="module" src="assets/admin.js" defer></script>
-	<script type="module" src="assets/modale.js" defer></script>
 	<script src="https://kit.fontawesome.com/71fd7e77a9.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -79,9 +76,39 @@
 		<h3>Galerie photo</h3>
 		<div class="modale-liste-boites">
 		</div>
+
+		<form class="formulaire-modale">
+			<div class="photo-upload">
+				<label for="photo">
+					<input type="button" value="+ Ajouter photo">
+					<span>jpg, png de 4mo max</span>
+				</label>
+				<input type="file" id="photo" name="photo" accept="image/jpeg, image/png" hidden>
+			</div>
+
+			<div>
+				<label for="titre">Titre</label>
+				<input type="text" id="titre" name="titre">
+			</div>
+
+			<div>
+				<label for="categorie">Catégorie</label>
+				<select id="categorie" name="categorie">
+					<option value="choix1">Choix 1</option>
+					<option value="choix2">Choix 2</option>
+					<option value="choix3">Choix 3</option>
+				</select>
+			</div>
+
+			<input type="submit" value="Envoyer">
+		</form>
+
 		<h4>Ajouter une photo</h4>
 	</div>
 </div>
 
+<script type="module" src="assets/script.js"></script>
+<script type="module" src="assets/admin.js"></script>
+<script type="module" src="assets/modale.js"></script>
 </body>
 </html>
