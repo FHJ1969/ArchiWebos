@@ -222,8 +222,9 @@ input[type="submit"]{
 	color: white;
 	background-color: #1D6154;
 	margin : 2em auto ;
-	width: 180px;
+	width: 200px;
 	text-align: center;
+	border-radius: 60px;
 }
 footer nav ul {
 	display: flex;
@@ -356,15 +357,16 @@ footer nav ul {
 	color: #306685;
 }
 #titre,#categorie {
-	width: 100%;
-	border: 0px transparent;
-	padding: 20px 0;
+	width: 92%;
+	border: 0 transparent;
+	padding: 20px;
 	margin-top: 10px;
 	font-weight: regular;
 	color : #444444;
 	box-shadow: 2px 4px 9px #E8F1F6;
 }
 #categorie{
+	width: 100%;
 	margin-bottom: 30px;
 }
 .label-categorie,
@@ -375,7 +377,6 @@ footer nav ul {
 .div-titre,
 .div-categorie {
 	margin: 15px 0;
-	box-shadow: black ;
 }
 .photo-upload {
 	position: relative;

@@ -93,13 +93,21 @@ function galleryModale() {
             listeBoites.style.display = "none";
             formulaireModale.style.display = "block";
             ajoutRetour();
+            //if (inputPhoto !== null && inputTitre !== null) {
+                //ajoutPhoto.style.backgroundColor = "#1d6154";
+                //ajoutPhoto.style.cursor = "pointer"
+            //}
         })
 
         btnRetour.addEventListener('click', (event) => {
             resetModal()
         })
+
+        //Ajout de la photo sélectionné comme placeholder
+        const inputTitre = document.getElementById('titre')
         const inputPhoto = document.querySelector('#photo-input');
         const photoUpload = document.querySelector('.photo-upload');
+
 
         inputPhoto.addEventListener('change', function(event) {
             const file = event.target.files[0];
