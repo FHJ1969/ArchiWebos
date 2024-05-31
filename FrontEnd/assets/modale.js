@@ -1,37 +1,49 @@
 const reponseWork = await fetch("http://localhost:5678/api/works");
 const work = await reponseWork.json();
-const loginElement = document.querySelector('.login');
-const listeFiltres = document.querySelector('.liste-filtres');
 const btnModifier = document.querySelector('.btn-modifier');
 const modal = document.getElementById('modal');
 const modaleTitre = document.querySelector('.modal-content h3');
 const ajoutPhoto = document.querySelector('.modal-content h4');
 const formulaireModale = document.querySelector('.formulaire-modale');
+const btnRetour = document.querySelector('.fa-arrow-left');
+const fermer = document.querySelector(".fa-xmark");
+const modaleHeader = document.querySelector('.modal-header');
 
-btnModifier.addEventListener('click', function() {
-    // Ouvrez la boîte de dialogue modale
-    modal.style.display = "block";
-});
-
-const span = document.querySelector(".fa-xmark");
-span.addEventListener('click', function() {
-    // Fermez la boîte de dialogue modale
-    modal.style.display = "none";
-    // Réinitialisez le contenu d'origine
+function ajoutRetour() {
+    if (formulaireModale.style.display === "block"){
+        btnRetour.style.display = "block";
+        modaleHeader.style.justifyContent = "";
+    } else {
+        btnRetour.style.display = "none";
+        modaleHeader.style.justifyContent ="flex-end";
+    }
+}
+function resetModal() {
     modaleTitre.innerText = "Galerie photo";
     ajoutPhoto.innerText = "Ajouter une photo";
-});
+    ajoutPhoto.style.backgroundColor = "";
+    ajoutPhoto.style.cursor = "";
+    formulaireModale.style.display = "none";
+    listeBoites.style.display = "";
+    ajoutRetour()
+}
 
+btnModifier.addEventListener('click', function() {
+    modal.style.display = "block";
+    ajoutRetour();
+});
+// Fermez la modale quand l'icone X est pressé
+fermer.addEventListener('click', function() {
+    modal.style.display = "none";
+    resetModal()
+});
 // Fermer la modale lorsqu'on clique en dehors de celle-ci
 window.addEventListener('click', function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
-        // Réinitialisez le contenu d'origine
-        modaleTitre.innerText = "Galerie photo";
-        ajoutPhoto.innerText = "Ajouter une photo";
+        resetModal()
     }
 });
-
 //Génération de la modale
 const listeBoites = document.querySelector('.modale-liste-boites');
 function galleryModale() {
@@ -71,13 +83,20 @@ function galleryModale() {
                     console.error('Erreur dans la suppression:', error);
                 });
         });
+
         //Changement des élements de la modale après que le bouton "Ajouter une photo soit pressé"
         ajoutPhoto.addEventListener('click', (event) => {
-            event.preventDefault();
             modaleTitre.innerText = "Ajout photo";
             ajoutPhoto.innerText = "Valider";
+            ajoutPhoto.style.backgroundColor = "#A7A7A7";
+            ajoutPhoto.style.cursor = "not-allowed"
             listeBoites.style.display = "none";
             formulaireModale.style.display = "block";
+            ajoutRetour();
+        })
+
+        btnRetour.addEventListener('click', (event) => {
+            resetModal()
         })
     }
 }

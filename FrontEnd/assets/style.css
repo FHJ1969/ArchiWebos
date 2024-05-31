@@ -150,12 +150,7 @@ nav a:hover {
 	cursor: pointer;
 }
 
-.page-modifier{
-
-}
-
 /* Filtres */
-
 .liste-filtres{
 	margin: 0 0 50px;
 	display: flex;
@@ -180,10 +175,7 @@ nav a:hover {
 	color: white;
 	background-color: #1D6154;
 }
-
-
 /* Gallery */
-
 .gallery {
 	width: 100%;
 	display: grid;
@@ -194,16 +186,13 @@ nav a:hover {
 .gallery img {
 	width: 100%;
 }
-
 /* Formulaire de contact */
-
 #contact {
 	width: 50%;
 	margin: auto;
 }
 #contact > * {
 	text-align: center;
-
 }
 #contact h2{
 	margin-bottom: 20px;
@@ -235,17 +224,13 @@ input[type="submit"]{
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
 }
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
-
 }
-
 /*Modale*/
-
 .modal {
 	display: none;
 	position: fixed;
@@ -255,10 +240,14 @@ footer nav ul {
 	width: 100%;
 	height: 100%;
 	overflow: auto;
-	background-color: rgb(0,0,0);
-	background-color: rgba(0,0,0,0.4);
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
 }
+
 .modal-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	background-color: #fefefe;
 	padding: 20px;
 	border: 1px solid #888;
@@ -269,16 +258,25 @@ footer nav ul {
 	transform: translate(-50%, -50%);
 	width: 38%;
 }
-.modal-content h3{
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.modal-content h3 {
 	text-align: center;
 	font-size: 26px;
-	margin: 50px 0 0;
+	margin: 0;
 }
-.modal-content h4{
-	font-family: 'Syne';
+
+.modal-content h4 {
+	font-family: "Syne";
 	font-weight: bold;
 	font-size: 14px;
-	background-color: #1D6154;
+	background-color: #1d6154;
 	color: white;
 	width: 250px;
 	padding: 13px;
@@ -294,21 +292,27 @@ footer nav ul {
 	font-size: 23px;
 	font-weight: bold;
 	margin-right: 8px;
+	display: none;
 }
-
-.fa-xmark:hover,
-.fa-xmark:focus {
+.fa-arrow-left{
+	font-size: 23px;
+	color: #000000;
+	font-weight: bold;
+	display: none;
+}
+.fa-xmark:hover, .fa-arrow-left:hover{
 	color: #aaaaaa;
-	text-decoration: none;
 	cursor: pointer;
 }
-.modale-liste-boites{
+
+.modale-liste-boites {
 	padding: 50px 0;
-	margin: 0 50px 0 85px;
+	margin: 0 50px 0 50px;
 	display: flex;
 	flex-wrap: wrap;
 	border-bottom: 2px solid #B3B3B3;
 }
+
 .boite-modale {
 	width: 15%;
 	display: flex;
@@ -317,10 +321,11 @@ footer nav ul {
 	position: relative;
 }
 
-.boite-modale img{
+.boite-modale img {
 	width: 100%;
 	height: auto;
 }
+
 .fa-trash-can {
 	position: absolute;
 	top: 7px;
@@ -331,9 +336,62 @@ footer nav ul {
 	border-radius: 2px;
 	cursor: pointer;
 }
-
 /* Formulaire ajout photo */
-
-.formulaire-modale{
+.formulaire-modale {
 	display: none;
+	justify-content: center;
+	margin: 20px auto;
+	width: 70%;
+	border-bottom: 2px solid #B3B3B3;
+}
+.label-photo {
+	background-color: #CBD6DC;
+	padding: 10px 20px;
+	border-radius: 60px;
+	cursor: pointer;
+	display: block;
+	font-weight: 500;
+	width: 30%;
+	margin: 15px auto;
+	color: #306685;
+}
+#titre,#categorie {
+	width: 94.5%;
+	border: 0px transparent;
+	padding: 10px;
+	margin-top: 10px;
+	font-weight: regular;
+	color : #444444;
+	box-shadow: 2px 4px 9px #E8F1F6;
+}
+#categorie{
+	margin-bottom: 30px;
+	width: 100%;
+}
+.label-categorie,
+.label-titre {
+	font-size: 14px;
+	font-weight: 500;
+}
+.div-titre,
+.div-categorie {
+	margin: 15px 0;
+	box-shadow: black ;
+}
+.photo-upload {
+	position: relative;
+	width: 100%;
+	display: block;
+	text-align: center;
+	background-color: #E8F1F6;
+	padding: 20px 0;
+	margin: 20px 0;
+}
+.photo-format {
+	font-size: 12px;
+	margin-left: 10px;
+}
+.fa-image{
+	color: #B9C5CC;
+	font-size: 76px;
 }

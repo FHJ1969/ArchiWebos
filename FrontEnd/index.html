@@ -72,40 +72,41 @@
 
 <div class="modal" id="modal">
 	<div class="modal-content">
-		<i class="fa-solid fa-xmark"></i>
+		<div class="modal-header">
+			<i class="fa-solid fa-arrow-left"></i>
+			<i class="fa-solid fa-xmark"></i>
+		</div>
 		<h3>Galerie photo</h3>
 		<div class="modale-liste-boites">
 		</div>
 
 		<form class="formulaire-modale">
 			<div class="photo-upload">
-				<label for="photo">
-					<input type="button" value="+ Ajouter photo">
-					<span>jpg, png de 4mo max</span>
-				</label>
-				<input type="file" id="photo" name="photo" accept="image/jpeg, image/png" hidden>
+				<i class="fa-regular fa-image"></i>
+				<label class="label-photo" for="photo-input">+ Ajouter photo</label>
+				<input type="file" id="photo-input" name="filename" accept="image/gif, image/jpeg, image/png" hidden>
+				<p class="photo-format">jpg, png de 4mo max</p>
 			</div>
 
-			<div>
-				<label for="titre">Titre</label>
+			<div class="div-titre">
+				<label class="label-titre" for="titre">Titre</label><br>
 				<input type="text" id="titre" name="titre">
 			</div>
 
-			<div>
-				<label for="categorie">Catégorie</label>
+			<div class="div-categorie">
+				<label class="label-categorie" for="categorie">Catégorie</label><br>
 				<select id="categorie" name="categorie">
-					<option value="choix1">Choix 1</option>
-					<option value="choix2">Choix 2</option>
-					<option value="choix3">Choix 3</option>
+					<option value="choix1">Objets</option>
+					<option value="choix2">Appartements</option>
+					<option value="choix3">Hôtels & restaurants</option>
 				</select>
 			</div>
-
-			<input type="submit" value="Envoyer">
 		</form>
 
 		<h4>Ajouter une photo</h4>
 	</div>
 </div>
+
 
 <script type="module" src="assets/script.js"></script>
 <script type="module" src="assets/admin.js"></script>

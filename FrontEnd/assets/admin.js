@@ -5,11 +5,11 @@ const listeFiltres = document.querySelector('.liste-filtres');
 
 if (localStorage.getItem('userConnected')) {
 //Eléments modifié avec le passage en page admin
+    const mesProjets = document.querySelector('#portfolio h2');
     loginElement.innerText = "logout"
     loginElement.href = "index.html";
     listeFiltres.style.display = "none";
-//Création du bouton de la modale "modifier"
-    const mesProjets = document.querySelector('#portfolio h2');
+    mesProjets.style.marginLeft = "3.5em";
 
     const modifierIcone = document.createElement("i");
     modifierIcone.className = "fa-regular fa-pen-to-square";
