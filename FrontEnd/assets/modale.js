@@ -98,7 +98,24 @@ function galleryModale() {
         btnRetour.addEventListener('click', (event) => {
             resetModal()
         })
+        const inputPhoto = document.querySelector('#photo-input');
+        const photoUpload = document.querySelector('.photo-upload');
+
+        inputPhoto.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.classList.add('preview-img');
+                photoUpload.innerHTML = '';
+                photoUpload.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        });
+
     }
 }
-
 galleryModale()

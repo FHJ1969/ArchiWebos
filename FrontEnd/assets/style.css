@@ -356,9 +356,9 @@ footer nav ul {
 	color: #306685;
 }
 #titre,#categorie {
-	width: 94.5%;
+	width: 100%;
 	border: 0px transparent;
-	padding: 10px;
+	padding: 20px 0;
 	margin-top: 10px;
 	font-weight: regular;
 	color : #444444;
@@ -366,7 +366,6 @@ footer nav ul {
 }
 #categorie{
 	margin-bottom: 30px;
-	width: 100%;
 }
 .label-categorie,
 .label-titre {
@@ -386,6 +385,10 @@ footer nav ul {
 	background-color: #E8F1F6;
 	padding: 20px 0;
 	margin: 20px 0;
+}
+.photo-upload img {
+	max-width: 129px;
+	max-height: 193px;
 }
 .photo-format {
 	font-size: 12px;
