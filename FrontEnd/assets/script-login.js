@@ -7,6 +7,10 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
     const email = emailInput.value;
     const mdp = mdpInput.value;
+    if (!email || !mdp ){
+        alert('Merci de saisir un mot de passe et un e-mail.');
+        return
+    }
     // Création d'un objet avec les valeurs de l'email et du mot de passe
     const userData = {
         email: email,

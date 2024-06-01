@@ -13,6 +13,8 @@ const inputTitre = document.getElementById('titre')
 const inputPhoto = document.querySelector('#photo-input');
 const inputCateogorie = document.getElementById('categorie');
 const photoUpload = document.querySelector('.photo-upload');
+const token =JSON.parse(localStorage.getItem('userConnected')).token;
+console.log(token)
 
 //Functions à utiliser plusieurs fois durant le code
 function ajoutRetour() {
@@ -54,12 +56,15 @@ btnRetour.addEventListener('click', resetModal)
 
 //Génération de la modale et ses changements de status
 const listeBoites = document.querySelector('.modale-liste-boites');
-function galleryModale() {
+async function galleryModale() {
+    const reponseWork = await fetch("http://localhost:5678/api/works");
+    const work = await reponseWork.json();
     for (let i = 0; i < work.length; i++) {
         const boiteModale = document.createElement("figure");
         boiteModale.classList.add("boite-modale");
         listeBoites.appendChild(boiteModale);
         boiteModale.dataset.categoryId = work[i].categoryId;
+        boiteModale.dataset.id = work[i].id; // Ajoutez l'ID du projet à l'élément figure
 
         const image = document.createElement("img");
         image.src = work[i].imageUrl;
@@ -69,27 +74,30 @@ function galleryModale() {
         iconeSupprimer.className = "fa-solid fa-trash-can";
         boiteModale.appendChild(iconeSupprimer);
 
-        //Suppression des work selon le bouton supprimer pressé
+        // Suppression des work selon le bouton supprimer pressé
         iconeSupprimer.addEventListener('click', (event) => {
             const workId = boiteModale.dataset.id;
-
-            fetch(`http://localhost:5678/api/works/${workId}`, {
-                method: 'DELETE',
-                headers: {
-                    'accept': '*/*',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        boiteModale.remove();
-                    } else {
-                        console.error('Erreur dans la suppression:', response);
+            // Vérifiez si l'utilisateur est connecté en utilisant la clé "Userconnected" dans le local storage
+            if (token) {
+                fetch(`http://localhost:5678/api/works/${workId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization':'Bearer ' + token
                     }
                 })
-                .catch(error => {
-                    console.error('Erreur dans la suppression:', error);
-                });
+                    .then(response => {
+                        console.log(response)
+                        if (response.ok) {
+                            modal.style.display = "none";
+                            generationGallery()
+                        } else {
+                            console.error('Erreur dans la suppression:', response);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur dans la suppression:', error);
+                    });
+            }
         });
     }
 
@@ -134,3 +142,22 @@ function galleryModale() {
     });
 }
 galleryModale()
+async function generationGallery() {
+    const reponseWork = await fetch("http://localhost:5678/api/works");
+    const works = await reponseWork.json();
+    const gallery = document.querySelector('.gallery')
+    gallery.innerHTML = "";
+    for (let i = 0; i < works.length; i++) {
+        let boite = document.createElement("figure");
+        //boite.classList.add("boite", "boite-" + works[i].categoryId);
+        boite.dataset.categoryId = works[i].categoryId
+        let image = document.createElement("img");
+        image.src = works[i].imageUrl;
+        boite.appendChild(image);
+
+        let titre = document.createElement("figcaption");
+        titre.innerText = works[i].title;
+        boite.appendChild(titre);
+        gallery.appendChild(boite);
+    }
+}
