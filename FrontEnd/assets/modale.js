@@ -13,8 +13,7 @@ const inputTitre = document.getElementById('titre')
 const inputPhoto = document.querySelector('#photo-input');
 const inputCateogorie = document.getElementById('categorie');
 const photoUpload = document.querySelector('.photo-upload');
-const token =JSON.parse(localStorage.getItem('userConnected')).token;
-console.log(token)
+const token = JSON.parse(localStorage.getItem('userConnected')).token;
 
 //Functions à utiliser plusieurs fois durant le code
 function ajoutRetour() {
@@ -26,6 +25,7 @@ function ajoutRetour() {
         modaleHeader.style.justifyContent ="flex-end";
     }
 }
+
 function resetModal() {
     modaleTitre.innerText = "Galerie photo";
     ajoutPhoto.innerText = "Ajouter une photo";
@@ -34,7 +34,14 @@ function resetModal() {
     formulaireModale.style.display = "none";
     listeBoites.style.display = "";
     ajoutRetour()
+    inputTitre.value = "";
+    inputPhoto.value = "";
+    inputCateogorie.value = "choix1";
+    photoUpload.innerHTML = `<i class="fa-regular fa-image"></i>
+                             <label class="label-photo" for="photo-input">+ Ajouter photo</label>
+                             <p class="photo-format">jpg, png de 4mo max</p>`;
 }
+
 //Changement de status selon le bouton pressé
 btnModifier.addEventListener('click', function() {
     modal.style.display = "block";
@@ -52,6 +59,7 @@ window.addEventListener('click', function(event) {
         resetModal()
     }
 });
+
 btnRetour.addEventListener('click', resetModal)
 
 //Génération de la modale et ses changements de status
@@ -140,8 +148,52 @@ async function galleryModale() {
 
         reader.readAsDataURL(file);
     });
+
+    // Ajout d'un nouvel élément à la galerie
+    formulaireModale.addEventListener('click', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        try {
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const newWork = await response.json();
+
+                const newBoite = document.createElement("figure");
+                newBoite.dataset.id = newWork.id;
+                newBoite.dataset.categoryId = newWork.categoryId;
+
+                const newImage = document.createElement("img");
+                newImage.src = newWork.imageUrl;
+                newBoite.appendChild(newImage);
+
+                const newTitre = document.createElement("figcaption");
+                newTitre.innerText = newWork.title;
+                newBoite.appendChild(newTitre);
+
+                const gallery = document.querySelector(".gallery");
+                gallery.appendChild(newBoite);
+
+                resetModal();
+            } else {
+                console.error("Erreur lors de l'ajout de l'élément");
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'envoi de la requête : ", error);
+        }
+    });
 }
+
 galleryModale()
+
 async function generationGallery() {
     const reponseWork = await fetch("http://localhost:5678/api/works");
     const works = await reponseWork.json();
