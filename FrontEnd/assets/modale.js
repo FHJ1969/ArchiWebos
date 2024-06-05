@@ -20,10 +20,6 @@ const token =JSON.parse(localStorage.getItem('userConnected')).token;
 const userConnected = JSON.parse(localStorage.getItem('userConnected'));
 const userId = userConnected.userId;
 
-const photoValue = inputPhoto.value;
-const titreValue = inputTitre.value;
-const categorieValue = inputCategorie.value;
-
 const categorieChoix0 = document.getElementById('choix0')
 const categorieChoix1 = document.getElementById('choix1')
 const categorieChoix2 = document.getElementById('choix2')
@@ -137,6 +133,7 @@ async function galleryModale() {
 
             // Créer un objet JSON à partir des valeurs des champs du formulaire
             const formulaireData = {
+                id: "",
                 title: inputTitre.value,
                 imageUrl: inputPhoto.value,
                 categoryId: inputCategoryId,
@@ -145,7 +142,7 @@ async function galleryModale() {
 
             const formulaireJSON = JSON.stringify(formulaireData);
 
-
+            //Stocker les éléments fourni dans le formulaire dans le chemin "work" de l'API
             fetch('http://localhost:5678/api/works', {
                 method: 'POST',
                 headers: {
@@ -156,15 +153,16 @@ async function galleryModale() {
             })
                 .then(response => {
                     if (response.ok) {
-                        // La requête a réussi, vous pouvez par exemple afficher un message de succès
                         console.log('La boîte a été créée avec succès');
+                        modal.style.display = "none";
                     } else {
-                        // La requête a échoué, vous pouvez par exemple afficher un message d'erreur
                         console.error('Erreur dans la création de la boîte');
+                        for (let i=0; i<inputFormulaire.length; i++) {
+                            inputFormulaire[i].value = "" ;
+                        }
                     }
                 })
                 .catch(error => {
-                    // Une erreur s'est produite lors de l'envoi de la requête, vous pouvez par exemple afficher un message d'erreur
                     console.error('Erreur dans la création de la boîte', error);
                 });
 
