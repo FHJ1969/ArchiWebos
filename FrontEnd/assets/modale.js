@@ -4,16 +4,30 @@ const work = await reponseWork.json();
 const btnModifier = document.querySelector('.btn-modifier');
 const modal = document.getElementById('modal');
 const modaleTitre = document.querySelector('.modal-content h3');
-const ajoutPhoto = document.querySelector('.modal-content h4');
+const btnValider = document.querySelector('.modal-content h4');
 const formulaireModale = document.querySelector('.formulaire-modale');
 const btnRetour = document.querySelector('.fa-arrow-left');
 const fermer = document.querySelector(".fa-xmark");
 const modaleHeader = document.querySelector('.modal-header');
 const inputTitre = document.getElementById('titre')
 const inputPhoto = document.querySelector('#photo-input');
-const inputCateogorie = document.getElementById('categorie');
+const inputCategorie = document.getElementById('categorie');
+const inputFormulaire = [inputTitre, inputPhoto, inputCategorie];
 const photoUpload = document.querySelector('.photo-upload');
-const token = JSON.parse(localStorage.getItem('userConnected')).token;
+let gallery = document.querySelector(".gallery");
+
+const token =JSON.parse(localStorage.getItem('userConnected')).token;
+const userConnected = JSON.parse(localStorage.getItem('userConnected'));
+const userId = userConnected.userId;
+
+const photoValue = inputPhoto.value;
+const titreValue = inputTitre.value;
+const categorieValue = inputCategorie.value;
+
+const categorieChoix0 = document.getElementById('choix0')
+const categorieChoix1 = document.getElementById('choix1')
+const categorieChoix2 = document.getElementById('choix2')
+let inputCategoryId = 0
 
 //Functions à utiliser plusieurs fois durant le code
 function ajoutRetour() {
@@ -25,23 +39,15 @@ function ajoutRetour() {
         modaleHeader.style.justifyContent ="flex-end";
     }
 }
-
 function resetModal() {
     modaleTitre.innerText = "Galerie photo";
-    ajoutPhoto.innerText = "Ajouter une photo";
-    ajoutPhoto.style.backgroundColor = "";
-    ajoutPhoto.style.cursor = "";
+    btnValider.innerText = "Ajouter une photo";
+    btnValider.style.backgroundColor = "";
+    btnValider.style.cursor = "";
     formulaireModale.style.display = "none";
     listeBoites.style.display = "";
     ajoutRetour()
-    inputTitre.value = "";
-    inputPhoto.value = "";
-    inputCateogorie.value = "choix1";
-    photoUpload.innerHTML = `<i class="fa-regular fa-image"></i>
-                             <label class="label-photo" for="photo-input">+ Ajouter photo</label>
-                             <p class="photo-format">jpg, png de 4mo max</p>`;
 }
-
 //Changement de status selon le bouton pressé
 btnModifier.addEventListener('click', function() {
     modal.style.display = "block";
@@ -59,7 +65,6 @@ window.addEventListener('click', function(event) {
         resetModal()
     }
 });
-
 btnRetour.addEventListener('click', resetModal)
 
 //Génération de la modale et ses changements de status
@@ -110,90 +115,95 @@ async function galleryModale() {
     }
 
     // Changement des élements de la modale après que le bouton "Ajouter une photo soit pressé"
-    ajoutPhoto.addEventListener('click', (event) => {
+    btnValider.addEventListener('click', async (event) => {
         modaleTitre.innerText = "Ajout photo";
-        ajoutPhoto.innerText = "Valider";
-        ajoutPhoto.style.backgroundColor = "#A7A7A7";
-        ajoutPhoto.style.cursor = "not-allowed"
+        btnValider.innerText = "Valider";
+        btnValider.style.backgroundColor = "#A7A7A7";
+        btnValider.style.cursor = "not-allowed"
         listeBoites.style.display = "none";
         formulaireModale.style.display = "block";
         ajoutRetour();
-    });
 
-    const inputFormulaire = [inputTitre, inputPhoto, inputCateogorie];
+        // Vérifier que tous les champs du formulaire sont remplis
+        if (inputPhoto.value !== "" && inputTitre.value !== "" && inputCategorie.value !== "") {
+            // Attribuer l'ID de catégorie en fonction de la valeur du champ de catégorie
+            if (inputCategorie.value === categorieChoix0.value) {
+                inputCategoryId = 1;
+            } else if (inputCategorie.value === categorieChoix1.value) {
+                inputCategoryId = 2;
+            } else if (inputCategorie.value === categorieChoix2.value) {
+                inputCategoryId = 3;
+            }
+
+            // Créer un objet JSON à partir des valeurs des champs du formulaire
+            const formulaireData = {
+                title: inputTitre.value,
+                imageUrl: inputPhoto.value,
+                categoryId: inputCategoryId,
+                userId: userId
+            };
+
+            const formulaireJSON = JSON.stringify(formulaireData);
+
+
+            fetch('http://localhost:5678/api/works', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                },
+                body: formulaireJSON
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // La requête a réussi, vous pouvez par exemple afficher un message de succès
+                        console.log('La boîte a été créée avec succès');
+                    } else {
+                        // La requête a échoué, vous pouvez par exemple afficher un message d'erreur
+                        console.error('Erreur dans la création de la boîte');
+                    }
+                })
+                .catch(error => {
+                    // Une erreur s'est produite lors de l'envoi de la requête, vous pouvez par exemple afficher un message d'erreur
+                    console.error('Erreur dans la création de la boîte', error);
+                });
+
+        };
+
+
+    //Changement du style du bouton après que les champs du formulaire soit rempli
     inputFormulaire.forEach((input) => {
         input.addEventListener('input', (event) => {
-            if (inputPhoto.value !== "" && inputTitre.value !== "" && inputCateogorie.value !== "") {
-                ajoutPhoto.style.backgroundColor = "#1d6154";
-                ajoutPhoto.style.cursor = "pointer"
+            if (inputPhoto.value !== "" && inputTitre.value !== "" && inputCategorie.value !== "") {
+                btnValider.style.backgroundColor = "#1d6154";
+                btnValider.style.cursor = "pointer"
             } else {
-                ajoutPhoto.style.backgroundColor = "#A7A7A7";
-                ajoutPhoto.style.cursor = "not-allowed"
+                btnValider.style.backgroundColor = "#A7A7A7";
+                btnValider.style.cursor = "not-allowed"
             }
         });
     });
 
-    //Ajout de la photo sélectionné comme placeholder
-    inputPhoto.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
+//Ajout de la photo sélectionné comme placeholder
+        inputPhoto.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
 
-        reader.onload = function(event) {
-            const img = document.createElement('img');
-            img.src = event.target.result;
-            img.classList.add('preview-img');
-            photoUpload.innerHTML = '';
-            photoUpload.appendChild(img);
-        };
+            reader.onload = function(event) {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.classList.add('preview-img');
+                photoUpload.innerHTML = '';
+                photoUpload.appendChild(img);
+            };
 
-        reader.readAsDataURL(file);
-    });
+            reader.readAsDataURL(file);
+        });
 
-    // Ajout d'un nouvel élément à la galerie
-    formulaireModale.addEventListener('click', async function(event) {
-        event.preventDefault();
-
-        const formData = new FormData(this);
-
-        try {
-            const response = await fetch("http://localhost:5678/api/works", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                body: formData
-            });
-
-            if (response.ok) {
-                const newWork = await response.json();
-
-                const newBoite = document.createElement("figure");
-                newBoite.dataset.id = newWork.id;
-                newBoite.dataset.categoryId = newWork.categoryId;
-
-                const newImage = document.createElement("img");
-                newImage.src = newWork.imageUrl;
-                newBoite.appendChild(newImage);
-
-                const newTitre = document.createElement("figcaption");
-                newTitre.innerText = newWork.title;
-                newBoite.appendChild(newTitre);
-
-                const gallery = document.querySelector(".gallery");
-                gallery.appendChild(newBoite);
-
-                resetModal();
-            } else {
-                console.error("Erreur lors de l'ajout de l'élément");
-            }
-        } catch (error) {
-            console.error("Erreur lors de l'envoi de la requête : ", error);
-        }
-    });
+    })
 }
 
 galleryModale()
-
 async function generationGallery() {
     const reponseWork = await fetch("http://localhost:5678/api/works");
     const works = await reponseWork.json();
