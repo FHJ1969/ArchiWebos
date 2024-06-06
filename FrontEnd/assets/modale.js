@@ -123,12 +123,10 @@ async function galleryModale() {
         // Vérifier que tous les champs du formulaire sont remplis
         if (inputPhoto.value !== "" && inputTitre.value !== "" && inputCategorie.value !== "") {
             // Attribuer l'ID de catégorie en fonction de la valeur du champ de catégorie
-            if (inputCategorie.value === categorieChoix0.value) {
-                inputCategoryId = 1;
-            } else if (inputCategorie.value === categorieChoix1.value) {
-                inputCategoryId = 2;
-            } else if (inputCategorie.value === categorieChoix2.value) {
-                inputCategoryId = 3;
+            for (let i=0; i<3; i++){
+                if (inputCategorie.value === categorieChoix[i].value){
+                    inputCategorie = [i];
+                }
             }
 
             // Créer un objet JSON à partir des valeurs des champs du formulaire
@@ -143,13 +141,13 @@ async function galleryModale() {
             const formulaireJSON = JSON.stringify(formulaireData);
 
             //Stocker les éléments fourni dans le formulaire dans le chemin "work" de l'API
-            fetch('http://localhost:5678/api/works', {
+            await fetch('http://localhost:5678/api/works', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer ' + token,
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: formulaireJSON
+                body: formulaireJSON,
             })
                 .then(response => {
                     if (response.ok) {

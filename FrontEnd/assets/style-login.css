@@ -5,6 +5,9 @@ main {
     margin-top: 10em;
     width: 100%;
 }
+#email{
+    background-color: #FFFFFF;
+}
 #contact {
     width: 35%;
 }
