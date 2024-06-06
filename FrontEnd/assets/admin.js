@@ -11,6 +11,7 @@ if (localStorage.getItem('userConnected')) {
     listeFiltres.style.display = "none";
     mesProjets.style.marginLeft = "3.5em";
 
+
     const modifierIcone = document.createElement("i");
     modifierIcone.className = "fa-regular fa-pen-to-square";
     modifierIcone.classList.add("modifier");

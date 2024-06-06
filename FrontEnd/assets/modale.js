@@ -10,12 +10,11 @@ const btnRetour = document.querySelector('.fa-arrow-left');
 const fermer = document.querySelector(".fa-xmark");
 const modaleHeader = document.querySelector('.modal-header');
 const inputTitre = document.getElementById('titre')
-const inputPhoto = document.querySelector('#photo-input');
 const inputCategorie = document.getElementById('categorie');
+const inputPhoto = document.getElementById('photo-input')
 const inputFormulaire = [inputTitre, inputPhoto, inputCategorie];
 const photoUpload = document.querySelector('.photo-upload');
-let gallery = document.querySelector(".gallery");
-
+let gallery = document.querySelector(".gallery");;
 const token =JSON.parse(localStorage.getItem('userConnected')).token;
 const userConnected = JSON.parse(localStorage.getItem('userConnected'));
 const userId = userConnected.userId;
@@ -123,33 +122,36 @@ async function galleryModale() {
         // Vérifier que tous les champs du formulaire sont remplis
         if (inputPhoto.value !== "" && inputTitre.value !== "" && inputCategorie.value !== "") {
             // Attribuer l'ID de catégorie en fonction de la valeur du champ de catégorie
-            for (let i=0; i<3; i++){
-                if (inputCategorie.value === categorieChoix[i].value){
-                    inputCategorie = [i];
-                }
+            //for (let i=0; i<3; i++){
+                //if (inputCategorie.value === categorieChoix[i].value){
+                    //inputCategorie.value = [i]+1;
+                //}
+            //}
+            if (inputCategorie.value === categorieChoix0.value) {
+                inputCategoryId = 1;
+            } else if (inputCategorie.value === categorieChoix1.value) {
+                inputCategoryId = 2;
+            } else if (inputCategorie.value === categorieChoix2.value) {
+                inputCategoryId = 3;
             }
 
             // Créer un objet JSON à partir des valeurs des champs du formulaire
-            const formulaireData = {
-                id: "",
-                title: inputTitre.value,
-                imageUrl: inputPhoto.value,
-                categoryId: inputCategoryId,
-                userId: userId
-            };
-
-            const formulaireJSON = JSON.stringify(formulaireData);
+            const formulaireData = new FormData();
+            formulaireData.append("title", inputTitre.value);
+            formulaireData.append("image", inputPhoto.files[0]);
+            formulaireData.append("category", inputCategoryId);
 
             //Stocker les éléments fourni dans le formulaire dans le chemin "work" de l'API
-            await fetch('http://localhost:5678/api/works', {
+            fetch("http://localhost:5678/api/works", {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + token,
                 },
-                body: formulaireJSON,
+                body: formulaireData,
             })
                 .then(response => {
+                    console.log(response)
                     if (response.ok) {
                         console.log('La boîte a été créée avec succès');
                         modal.style.display = "none";
@@ -161,7 +163,7 @@ async function galleryModale() {
                     }
                 })
                 .catch(error => {
-                    console.error('Erreur dans la création de la boîte', error);
+                    console.log(error);
                 });
 
         };
@@ -180,7 +182,7 @@ async function galleryModale() {
         });
     });
 
-//Ajout de la photo sélectionné comme placeholder
+    //Ajout de la photo sélectionné comme placeholder
         inputPhoto.addEventListener('change', function(event) {
             const file = event.target.files[0];
             const reader = new FileReader();
