@@ -1,5 +1,5 @@
 const reponseWork = await fetch("http://localhost:5678/api/works");
-const work = await reponseWork.json();
+const works = await reponseWork.json();
 //Définition des élements du DOM
 const btnModifier = document.querySelector('.btn-modifier');
 const modal = document.getElementById('modal');
@@ -86,7 +86,7 @@ async function galleryModale() {
         iconeSupprimer.addEventListener('click', (event) => {
             const workId = boiteModale.dataset.id;
             // Vérifiez si l'utilisateur est connecté en utilisant la clé "Userconnected" dans le local storage
-            if (token) {
+            if (userConnected) {
                 fetch(`http://localhost:5678/api/works/${workId}`, {
                     method: 'DELETE',
                     headers: {
@@ -94,7 +94,6 @@ async function galleryModale() {
                     }
                 })
                     .then(response => {
-                        console.log(response)
                         if (response.ok) {
                             modal.style.display = "none";
                             generationGallery()
