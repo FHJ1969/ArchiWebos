@@ -3,11 +3,13 @@ const work = await reponseWork.json();
 const loginElement = document.querySelector('.login');
 const listeFiltres = document.querySelector('.liste-filtres');
 const modifierHeader = document.querySelector('.modifier-header');
+const header = document.querySelector('header');
 
 function changementsAdmin () {
     const mesProjets = document.querySelector('#portfolio h2');
 
-    loginElement.innerText = "logout"
+    header.style.marginTop = "100px";
+    loginElement.innerText = "logout";
     loginElement.href = "index.html";
     listeFiltres.style.display = "none";
     mesProjets.style.marginLeft = "3.5em";
@@ -43,6 +45,7 @@ if (localStorage.getItem('userConnected')) {
     changementsAdmin()
 } else {
 //Affichage normal si non connecté
+    header.style.marginTop = "50px";
     loginElement.innerText = "login"
     loginElement.href = "index-login.html";
     modifierHeader.style.display = "none";

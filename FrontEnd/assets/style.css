@@ -78,7 +78,7 @@ body {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 100px 0 0; /* réduisez la marge supérieure à 0 */
+	margin: 50px 0 0;
 }
 section {
 	margin: 50px 0
