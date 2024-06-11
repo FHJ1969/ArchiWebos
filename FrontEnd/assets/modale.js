@@ -2,6 +2,7 @@ const reponseWork = await fetch("http://localhost:5678/api/works");
 const works = await reponseWork.json();
 //Définition des élements du DOM
 const btnModifier = document.querySelector('.btn-modifier');
+const btnModifierHeader = document.querySelector('.btn-modifier-header');
 const modal = document.getElementById('modal');
 const modaleTitre = document.querySelector('.modal-content h3');
 const btnValider = document.querySelector('.modal-content h4');
@@ -136,16 +137,17 @@ async function galleryModale() {
 
             // Créer un objet JSON à partir des valeurs des champs du formulaire
             const formulaireData = new FormData();
-            formulaireData.append("title", inputTitre.value);
             formulaireData.append("image", inputPhoto.files[0]);
+            formulaireData.append("title", inputTitre.value);
             formulaireData.append("category", inputCategoryId);
 
             //Stocker les éléments fourni dans le formulaire dans le chemin "work" de l'API
-            fetch("http://localhost:5678/api/works", {
+            await fetch("http://localhost:5678/api/works", {
                 method: 'POST',
                 headers: {
+                    'Content-Type': 'multipart/form-data',
                     'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + token,
+                    'Authorization': `Bearer ${token}`
                 },
                 body: formulaireData,
             })

@@ -53,10 +53,32 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+.modifier-header {
+	position: fixed; /* ou position: absolute */
+	top: 0;
+	left: 0;
+	padding: 20px;
+	background-color: black;
+	width: 100vw; /* largeur égale à la largeur de la fenêtre d'affichage */
+	box-sizing: border-box; /* pour inclure le padding dans la largeur totale */
+	text-align: center;
+	font-size: 16px;
+	z-index: 1; /* pour s'assurer que le span est au-dessus des autres éléments */
+}
+.btn-modifier-header{
+	font-family: 'Work Sans';
+	color: white;
+	background: none;
+	border: none;
+}
+.modifier-header .fa-pen-to-square{
+	color: white;
+	font-size: 16px;
+}
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 100px 0 0; /* réduisez la marge supérieure à 0 */
 }
 section {
 	margin: 50px 0
