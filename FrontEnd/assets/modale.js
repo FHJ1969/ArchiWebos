@@ -1,5 +1,9 @@
 const reponseWork = await fetch("http://localhost:5678/api/works");
 const works = await reponseWork.json();
+
+const reponseCategories = await fetch("http://localhost:5678/api/categories");
+const categories = await reponseCategories.json();
+
 //Définition des élements du DOM
 const btnModifier = document.querySelector('.btn-modifier');
 const btnModifierHeader = document.querySelector('.btn-modifier-header');
@@ -25,11 +29,28 @@ const categorieChoix1 = document.getElementById('choix1')
 const categorieChoix2 = document.getElementById('choix2')
 let inputCategoryId = 0
 
+
 //Functions à utiliser plusieurs fois durant le code
+const options = {};
+
+function ajoutOptionsFormulaire() {
+    for (let i = 0; i < categories.length; i++) {
+        const option = document.createElement("option");
+        option.setAttribute("value", 'choix'+[i]);
+        option.setAttribute("id", categories[i].id);
+        option.innerText = categories[i].name;
+
+        options[categories[i].id] = option;
+
+        inputCategorie.appendChild(option);
+    }
+}
+
 function ajoutRetour() {
     if (formulaireModale.style.display === "block"){
         btnRetour.style.display = "block";
         modaleHeader.style.justifyContent = "";
+        ajoutOptionsFormulaire();
     } else {
         btnRetour.style.display = "none";
         modaleHeader.style.justifyContent ="flex-end";
@@ -119,20 +140,10 @@ async function galleryModale() {
         formulaireModale.style.display = "block";
         ajoutRetour();
 
-        // Vérifier que tous les champs du formulaire sont remplis
         if (inputPhoto.value !== "" && inputTitre.value !== "" && inputCategorie.value !== "") {
-            // Attribuer l'ID de catégorie en fonction de la valeur du champ de catégorie
-            //for (let i=0; i<3; i++){
-                //if (inputCategorie.value === categorieChoix[i].value){
-                    //inputCategorie.value = [i]+1;
-                //}
-            //}
-            if (inputCategorie.value === categorieChoix0.value) {
-                inputCategoryId = 1;
-            } else if (inputCategorie.value === categorieChoix1.value) {
-                inputCategoryId = 2;
-            } else if (inputCategorie.value === categorieChoix2.value) {
-                inputCategoryId = 3;
+            const selectedOption = options[inputCategorie.value]; // Use the options object here
+            if (selectedOption) {
+                inputCategoryId = selectedOption.id;
             }
 
             // Créer un objet JSON à partir des valeurs des champs du formulaire
@@ -166,9 +177,7 @@ async function galleryModale() {
                 .catch(error => {
                     console.log(error);
                 });
-
-        };
-
+        }
 
     //Changement du style du bouton après que les champs du formulaire soit rempli
     inputFormulaire.forEach((input) => {
