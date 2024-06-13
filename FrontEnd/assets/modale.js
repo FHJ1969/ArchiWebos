@@ -24,10 +24,7 @@ const token =JSON.parse(localStorage.getItem('userConnected')).token;
 const userConnected = JSON.parse(localStorage.getItem('userConnected'));
 const userId = userConnected.userId;
 
-const categorieChoix0 = document.getElementById('choix0')
-const categorieChoix1 = document.getElementById('choix1')
-const categorieChoix2 = document.getElementById('choix2')
-let inputCategoryId = 0
+let inputCategoryId = inputCategorie.value
 
 
 //Functions à utiliser plusieurs fois durant le code
@@ -86,24 +83,25 @@ btnRetour.addEventListener('click', resetModal)
 
 //Génération de la modale et ses changements de status
 const listeBoites = document.querySelector('.modale-liste-boites');
-async function galleryModale() {
-    const reponseWork = await fetch("http://localhost:5678/api/works");
-    const work = await reponseWork.json();
-    for (let i = 0; i < work.length; i++) {
+
+
+function galleryModale() {
+    for (let i = 0; i < works.length; i++) {
         const boiteModale = document.createElement("figure");
         boiteModale.classList.add("boite-modale");
         listeBoites.appendChild(boiteModale);
-        boiteModale.dataset.categoryId = work[i].categoryId;
-        boiteModale.dataset.id = work[i].id; // Ajoutez l'ID du projet à l'élément figure
+        boiteModale.dataset.categoryId = works[i].categoryId;
+        boiteModale.dataset.id = works[i].id; // Ajoutez l'ID du projet à l'élément figure
 
         const image = document.createElement("img");
-        image.src = work[i].imageUrl;
+        image.src = works[i].imageUrl;
         boiteModale.appendChild(image);
 
         const iconeSupprimer = document.createElement("i");
         iconeSupprimer.className = "fa-solid fa-trash-can";
+        iconeSupprimer.classList.add("icone-supprimer")
         boiteModale.appendChild(iconeSupprimer);
-
+    }
         // Suppression des work selon le bouton supprimer pressé
         iconeSupprimer.addEventListener('click', (event) => {
             const workId = boiteModale.dataset.id;
@@ -128,6 +126,7 @@ async function galleryModale() {
                     });
             }
         });
+        generationGallery()
     }
 
     // Changement des élements de la modale après que le bouton "Ajouter une photo soit pressé"
@@ -140,81 +139,68 @@ async function galleryModale() {
         formulaireModale.style.display = "block";
         ajoutRetour();
 
-        if (inputPhoto.value !== "" && inputTitre.value !== "" && inputCategorie.value !== "") {
-            const selectedOption = options[inputCategorie.value]; // Use the options object here
-            if (selectedOption) {
-                inputCategoryId = selectedOption.id;
-            }
+        if (inputPhoto.files[0] && inputTitre.value && inputCategoryId) {
+            // Créer un objet FormData à partir des valeurs des champs du formulaire
+            const formData = new FormData();
+            formData.append("image", inputPhoto.files[0]);
+            formData.append("title", inputTitre.value);
+            formData.append("category", inputCategoryId);
 
-            // Créer un objet JSON à partir des valeurs des champs du formulaire
-            const formulaireData = new FormData();
-            formulaireData.append("image", inputPhoto.files[0]);
-            formulaireData.append("title", inputTitre.value);
-            formulaireData.append("category", inputCategoryId);
-
-            //Stocker les éléments fourni dans le formulaire dans le chemin "work" de l'API
-            await fetch("http://localhost:5678/api/works", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: formulaireData,
-            })
-                .then(response => {
-                    console.log(response)
-                    if (response.ok) {
-                        console.log('La boîte a été créée avec succès');
-                        modal.style.display = "none";
-                    } else {
-                        console.error('Erreur dans la création de la boîte');
-                        for (let i=0; i<inputFormulaire.length; i++) {
-                            inputFormulaire[i].value = "" ;
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
+            // Stocker les éléments fournis dans le formulaire dans le chemin "work" de l'API
+            try {
+                const response = await fetch("http://localhost:5678/api/works", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: formData,
                 });
+
+                if (response.ok) {
+                    console.log("La boîte a été créée avec succès");
+                    modal.style.display = "none";
+                } else {
+                    console.error("Erreur dans la création de la boîte");
+                    for (let i = 0; i < inputFormulaire.length; i++) {
+                        inputFormulaire[i].value = "";
+                    }
+                }
+            } catch (error) {
+                console.error("Erreur dans la création de la boîte", error);
+            }
         }
 
-    //Changement du style du bouton après que les champs du formulaire soit rempli
-    inputFormulaire.forEach((input) => {
-        input.addEventListener('input', (event) => {
-            if (inputPhoto.value !== "" && inputTitre.value !== "" && inputCategorie.value !== "") {
-                btnValider.style.backgroundColor = "#1d6154";
-                btnValider.style.cursor = "pointer"
-            } else {
-                btnValider.style.backgroundColor = "#A7A7A7";
-                btnValider.style.cursor = "not-allowed"
-            }
+        // Changement du style du bouton après que les champs du formulaire soient remplis
+        inputFormulaire.forEach((input) => {
+            input.addEventListener("input", (event) => {
+                if (inputPhoto.files[0] && inputTitre.value && inputCategoryId) {
+                    btnValider.style.backgroundColor = "#1d6154";
+                    btnValider.style.cursor = "pointer";
+                } else {
+                    btnValider.style.backgroundColor = "#A7A7A7";
+                    btnValider.style.cursor = "not-allowed";
+                }
+            });
         });
-    });
 
-    //Ajout de la photo sélectionné comme placeholder
-        inputPhoto.addEventListener('change', function(event) {
+        // Ajout de la photo sélectionnée comme placeholder
+        inputPhoto.addEventListener("change", function (event) {
             const file = event.target.files[0];
             const reader = new FileReader();
 
-            reader.onload = function(event) {
-                const img = document.createElement('img');
+            reader.onload = function (event) {
+                const img = document.createElement("img");
                 img.src = event.target.result;
-                img.classList.add('preview-img');
-                photoUpload.innerHTML = '';
+                img.classList.add("preview-img");
+                photoUpload.innerHTML = "";
                 photoUpload.appendChild(img);
             };
 
             reader.readAsDataURL(file);
         });
+    });
 
-    })
-}
-
-galleryModale()
-async function generationGallery() {
-    const reponseWork = await fetch("http://localhost:5678/api/works");
-    const works = await reponseWork.json();
+function generationGallery() {
     const gallery = document.querySelector('.gallery')
     gallery.innerHTML = "";
     for (let i = 0; i < works.length; i++) {
@@ -231,3 +217,5 @@ async function generationGallery() {
         gallery.appendChild(boite);
     }
 }
+
+galleryModale();
