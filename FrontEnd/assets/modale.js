@@ -1,6 +1,7 @@
 //Appel des API
 const reponseWork = await fetch("http://localhost:5678/api/works");
 const works = await reponseWork.json();
+
 const reponseCategories = await fetch("http://localhost:5678/api/categories");
 const categories = await reponseCategories.json();
 
@@ -17,15 +18,34 @@ const inputTitre = document.getElementById('titre')
 const inputCategorie = document.getElementById('categorie');
 const inputPhoto = document.getElementById('photo-input')
 const inputFormulaire = [inputTitre, inputPhoto, inputCategorie];
-const photoUpload = document.querySelector('.photo-upload');
-const token =JSON.parse(localStorage.getItem('userConnected')).token;
+const token = JSON.parse(localStorage.getItem('userConnected')).token;
 const userConnected = JSON.parse(localStorage.getItem('userConnected'));
 const userId = userConnected.userId;
 
-let inputCategoryId = inputCategorie.value
-
+let inputCategoryId = inputCategorie.value;
 
 //Functions à utiliser plusieurs fois durant le code
+
+async function generationGallery() {
+    const reponseWork = await fetch("http://localhost:5678/api/works");
+    const works = await reponseWork.json();
+    const gallery = document.querySelector('.gallery');
+    gallery.innerHTML = "";
+
+    for (let i = 0; i < works.length; i++) {
+        let boite = document.createElement("figure");
+        gallery.appendChild(boite);
+        //boite.classList.add("boite", "boite-" + works[i].categoryId);
+        boite.dataset.categoryId = works[i].categoryId
+        let image = document.createElement("img");
+        image.src = works[i].imageUrl;
+        boite.appendChild(image);
+
+        let titre = document.createElement("figcaption");
+        titre.innerText = works[i].title;
+        boite.appendChild(titre);
+    }
+}
 
 //Ajouts des options pour les catégories du formulaire
 const options = {};
@@ -33,8 +53,8 @@ const options = {};
 function ajoutOptionsFormulaire() {
     for (let i = 0; i < categories.length; i++) {
         const option = document.createElement("option");
-        option.setAttribute("value", 'choix'+[i]);
-        option.setAttribute("id", categories[i].id);
+        option.setAttribute("value", categories[i].id);
+        //option.setAttribute("id", categories[i].id);
         option.innerText = categories[i].name;
 
         options[categories[i].id] = option;
@@ -120,8 +140,9 @@ function galleryModale() {
                 })
                     .then(response => {
                         if (response.ok) {
-                            window.location.reload();
                             console.log("Suppression réussie.")
+                            modal.style.display = "none";
+                            generationGallery()
                         } else {
                             console.error('Erreur dans la suppression:', response);
                         }
@@ -134,19 +155,32 @@ function galleryModale() {
     }
 }
 
+btnValider.addEventListener('click', (event) => {
+    document.getElementById('step1').style.display = "none";
+    formulaireModale.style.display = "block";
+    ajoutOptionsFormulaire()
+})
 
 // Changement des élements de la modale après que le bouton "Ajouter une photo soit pressé"
-btnValider.addEventListener('click', async (event) => {
+document.querySelector("form button").addEventListener('click', async (event) => {
+    event.preventDefault()
     modaleTitre.innerText = "Ajout photo";
     btnValider.innerText = "Valider";
     btnValider.style.backgroundColor = "#A7A7A7";
-    btnValider.style.cursor = "not-allowed"
+    btnValider.style.cursor = "not-allowed";
     listeBoites.style.display = "none";
     formulaireModale.style.display = "block";
     ajoutRetour();
 
+console.log(inputPhoto.value)
+    console.log(inputTitre.value)
+    const inputCategorie = document.getElementById('categorie');
+    let inputCategoryId = inputCategorie.value
+    console.log(inputCategoryId)
+
     // Créer un objet FormData à partir des valeurs des champs du formulaire
     if (inputPhoto.value && inputTitre.value && inputCategoryId) {
+        console.log("oui")
         const formData = new FormData();
         formData.append("image", inputPhoto.files[0]);
         formData.append("title", inputTitre.value);
@@ -165,6 +199,7 @@ btnValider.addEventListener('click', async (event) => {
             if (response.ok) {
                 console.log("La boîte a été créée avec succès");
                 modal.style.display = "none";
+                generationGallery()
             } else {
                 console.error("Erreur dans la création de la boîte");
                 for (let i = 0; i < inputFormulaire.length; i++) {
@@ -176,34 +211,37 @@ btnValider.addEventListener('click', async (event) => {
         }
     }
 
-    // Changement du style du bouton après que les champs du formulaire soient remplis
-    inputFormulaire.forEach((input) => {
-        input.addEventListener("input", (event) => {
-            if (inputPhoto.files[0] != null && inputTitre.value != null && inputCategoryId != null) {
-                btnValider.style.backgroundColor = "#1d6154";
-                btnValider.style.cursor = "pointer";
-            } else {
-                btnValider.style.backgroundColor = "#A7A7A7";
-                btnValider.style.cursor = "not-allowed";
-            }
-        });
+});
+
+//Changement du style du bouton après que les champs du formulaire soient remplis
+inputFormulaire.forEach((input) => {
+    input.addEventListener("input", (event) => {
+        if (inputPhoto.files[0] != null && inputTitre.value != null && inputCategoryId != null) {
+            btnValider.style.backgroundColor = "#1d6154";
+            btnValider.style.cursor = "pointer";
+        } else {
+            btnValider.style.backgroundColor = "#A7A7A7";
+            btnValider.style.cursor = "not-allowed";
+        }
     });
+});
 
-    // Ajout de la photo sélectionnée comme placeholder
-    inputPhoto.addEventListener("change", function (event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
+//Ajout de la photo sélectionnée comme placeholder
+inputPhoto.addEventListener("change", function (event) {
 
-        reader.onload = function (event) {
-            const img = document.createElement("img");
-            img.src = event.target.result;
-            img.classList.add("preview-img");
-            photoUpload.innerHTML = "";
-            photoUpload.appendChild(img);
-        };
+    const photoUpload = document.querySelector('.photo-upload');
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
-        reader.readAsDataURL(file);
-    });
+    reader.onload = function (event) {
+        const img = document.createElement("img");
+        img.src = event.target.result;
+        img.classList.add("preview-img");
+        photoUpload.innerHTML = "";
+        photoUpload.appendChild(img);
+    };
+
+    reader.readAsDataURL(file);
 });
 
 galleryModale();

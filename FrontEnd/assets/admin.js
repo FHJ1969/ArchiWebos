@@ -3,9 +3,10 @@ const work = await reponseWork.json();
 const loginElement = document.querySelector('.login');
 const listeFiltres = document.querySelector('.liste-filtres');
 const modifierHeader = document.querySelector('.modifier-header');
-const header = document.querySelector('header');
+displayAdmin()
 
 function changementsAdmin () {
+    const header = document.querySelector('header');
     const mesProjets = document.querySelector('#portfolio h2');
 
     header.style.marginTop = "100px";
@@ -40,15 +41,18 @@ function changementsAdmin () {
 }
 
 
-if (localStorage.getItem('userConnected')) {
-//Eléments modifié avec le passage en page admin
-    changementsAdmin()
-} else {
-//Affichage normal si non connecté
-    header.style.marginTop = "50px";
-    loginElement.innerText = "login"
-    loginElement.href = "index-login.html";
-    modifierHeader.style.display = "none";
+function displayAdmin(){
+    const header = document.querySelector('header');
+    if (localStorage.getItem('userConnected')) {
+        //Eléments modifié avec le passage en page admin
+        changementsAdmin()
+    } else {
+        //Affichage normal si non connecté
+        header.style.marginTop = "50px";
+        loginElement.innerText = "login"
+        loginElement.href = "index-login.html";
+        modifierHeader.style.display = "none";
+    }
 }
 
 //Suppression de 'userConnected' si lien logout pressé
