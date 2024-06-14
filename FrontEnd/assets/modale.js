@@ -99,9 +99,9 @@ function galleryModale() {
 
         const iconeSupprimer = document.createElement("i");
         iconeSupprimer.className = "fa-solid fa-trash-can";
-        iconeSupprimer.classList.add("icone-supprimer")
+        iconeSupprimer.classList.add("icone-supprimer");
         boiteModale.appendChild(iconeSupprimer);
-    }
+
         // Suppression des work selon le bouton supprimer pressé
         iconeSupprimer.addEventListener('click', (event) => {
             const workId = boiteModale.dataset.id;
@@ -115,8 +115,7 @@ function galleryModale() {
                 })
                     .then(response => {
                         if (response.ok) {
-                            modal.style.display = "none";
-                            generationGallery()
+                            console.log("Suppression réussie.")
                         } else {
                             console.error('Erreur dans la suppression:', response);
                         }
@@ -126,8 +125,8 @@ function galleryModale() {
                     });
             }
         });
-        generationGallery()
     }
+}
 
     // Changement des élements de la modale après que le bouton "Ajouter une photo soit pressé"
     btnValider.addEventListener('click', async (event) => {
@@ -139,8 +138,8 @@ function galleryModale() {
         formulaireModale.style.display = "block";
         ajoutRetour();
 
-        if (inputPhoto.files[0] && inputTitre.value && inputCategoryId) {
-            // Créer un objet FormData à partir des valeurs des champs du formulaire
+        // Créer un objet FormData à partir des valeurs des champs du formulaire
+        if (inputPhoto.value && inputTitre.value && inputCategoryId) {
             const formData = new FormData();
             formData.append("image", inputPhoto.files[0]);
             formData.append("title", inputTitre.value);
