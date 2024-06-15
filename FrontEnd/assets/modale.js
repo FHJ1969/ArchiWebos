@@ -176,11 +176,9 @@ console.log(inputPhoto.value)
     console.log(inputTitre.value)
     const inputCategorie = document.getElementById('categorie');
     let inputCategoryId = inputCategorie.value
-    console.log(inputCategoryId)
 
     // Créer un objet FormData à partir des valeurs des champs du formulaire
     if (inputPhoto.value && inputTitre.value && inputCategoryId) {
-        console.log("oui")
         const formData = new FormData();
         formData.append("image", inputPhoto.files[0]);
         formData.append("title", inputTitre.value);
