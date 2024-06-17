@@ -36,7 +36,7 @@ function generationFiltres() {
 export async function generationGallery() {
     const responseWork = await fetch("http://localhost:5678/api/works");
     const works = await responseWork.json();
-    
+
     const gallery = document.querySelector('.gallery');
     gallery.innerHTML = "";
     for (let i = 0; i < works.length; i++) {
