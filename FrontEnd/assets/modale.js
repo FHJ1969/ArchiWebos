@@ -1,6 +1,4 @@
 //Appel des API
-const reponseWork = await fetch("http://localhost:5678/api/works");
-const works = await reponseWork.json();
 
 const reponseCategories = await fetch("http://localhost:5678/api/categories");
 const categories = await reponseCategories.json();
@@ -18,34 +16,14 @@ const inputTitre = document.getElementById('titre')
 const inputCategorie = document.getElementById('categorie');
 const inputPhoto = document.getElementById('photo-input')
 const inputFormulaire = [inputTitre, inputPhoto, inputCategorie];
-const token = JSON.parse(localStorage.getItem('userConnected')).token;
 const userConnected = JSON.parse(localStorage.getItem('userConnected'));
+const token = JSON.parse(localStorage.getItem('userConnected')).token;
 const userId = userConnected.userId;
 
 let inputCategoryId = inputCategorie.value;
 
-//Functions à utiliser plusieurs fois durant le code
-
-async function generationGallery() {
-    const reponseWork = await fetch("http://localhost:5678/api/works");
-    const works = await reponseWork.json();
-    const gallery = document.querySelector('.gallery');
-    gallery.innerHTML = "";
-
-    for (let i = 0; i < works.length; i++) {
-        let boite = document.createElement("figure");
-        gallery.appendChild(boite);
-        //boite.classList.add("boite", "boite-" + works[i].categoryId);
-        boite.dataset.categoryId = works[i].categoryId
-        let image = document.createElement("img");
-        image.src = works[i].imageUrl;
-        boite.appendChild(image);
-
-        let titre = document.createElement("figcaption");
-        titre.innerText = works[i].title;
-        boite.appendChild(titre);
-    }
-}
+//Génération de la gallery
+import { generationGallery } from './script.js';
 
 //Ajouts des options pour les catégories du formulaire
 const options = {};
@@ -65,10 +43,11 @@ function ajoutOptionsFormulaire() {
 
 //Ajout du bouton retour selon le status de la modale
 function ajoutRetour() {
+    const modalHeader = document.querySelector(".modal-header")
+    const formHeader = document.querySelector('.form-header')
     if (formulaireModale.style.display === "block"){
         btnRetour.style.display = "block";
         modaleHeader.style.justifyContent = "";
-        ajoutOptionsFormulaire()
     } else {
         btnRetour.style.display = "none";
         modaleHeader.style.justifyContent ="flex-end";
@@ -110,7 +89,9 @@ btnRetour.addEventListener('click', resetModal)
 const listeBoites = document.querySelector('.modale-liste-boites');
 
 
-function galleryModale() {
+async function galleryModale() {
+    const responseWork = await fetch("http://localhost:5678/api/works");
+    const works = await responseWork.json();
     for (let i = 0; i < works.length; i++) {
         const boiteModale = document.createElement("figure");
         boiteModale.classList.add("boite-modale");

@@ -309,6 +309,21 @@ footer nav ul {
 	margin: 40px auto;
 }
 
+#ajout-photo-modale {
+	font-family: "Syne";
+	font-weight: bold;
+	font-size: 14px;
+	background-color: #1d6154;
+	color: white;
+	width: 250px;
+	padding: 13px;
+	border-radius: 60px;
+	border: none;
+	text-align: center;
+	margin: 50px;
+	cursor: pointer;
+}
+
 .fa-xmark {
 	color: #000000;
 	float: right;

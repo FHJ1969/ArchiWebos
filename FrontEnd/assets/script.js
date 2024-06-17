@@ -1,8 +1,6 @@
 // Appel des API en JSON
-const reponseWorks = await fetch("http://localhost:5678/api/works");
-const works = await reponseWorks.json();
-const reponseCategories = await fetch("http://localhost:5678/api/categories");
-const categories = await reponseCategories.json();
+const responseCategories = await fetch("http://localhost:5678/api/categories");
+const categories = await responseCategories.json();
 
 // Récupération de la galerie et des filtres
 let gallery = document.querySelector(".gallery");
@@ -35,7 +33,12 @@ function generationFiltres() {
 }
 
 // Création des éléments galerie
-function generationGallery() {
+export async function generationGallery() {
+    const responseWork = await fetch("http://localhost:5678/api/works");
+    const works = await responseWork.json();
+    
+    const gallery = document.querySelector('.gallery');
+    gallery.innerHTML = "";
     for (let i = 0; i < works.length; i++) {
         let boite = document.createElement("figure");
         gallery.appendChild(boite);

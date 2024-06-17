@@ -61,5 +61,3 @@ loginElement.addEventListener('click', (event) => {
         localStorage.removeItem('userConnected');
     }
 })
-
-
