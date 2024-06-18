@@ -1,8 +1,3 @@
-//Appel des API
-
-const reponseCategories = await fetch("http://localhost:5678/api/categories");
-const categories = await reponseCategories.json();
-
 //Définition des élements du DOM
 const btnModifier = document.querySelector('.btn-modifier');
 const modal = document.getElementById('modal');
@@ -27,7 +22,9 @@ import { generationGallery } from './script.js';
 //Ajouts des options pour les catégories du formulaire
 const options = {};
 
-function ajoutOptionsFormulaire() {
+async function ajoutOptionsFormulaire() {
+    const reponseCategories = await fetch("http://localhost:5678/api/categories");
+    const categories = await reponseCategories.json();
     for (let i = 0; i < categories.length; i++) {
         const option = document.createElement("option");
         option.setAttribute("value", categories[i].id);
@@ -40,20 +37,6 @@ function ajoutOptionsFormulaire() {
     }
 }
 
-//Ajout du bouton retour selon le status de la modale
-function ajoutRetour() {
-    const modalHeader = document.querySelector(".modal-header")
-    const formHeader = document.querySelector('.form-header')
-    if (formulaireModale.style.display === "block"){
-        btnRetour.style.display = "block";
-        modaleHeader.style.justifyContent = "";
-    } else {
-        btnRetour.style.display = "none";
-        modaleHeader.style.justifyContent ="flex-end";
-        inputCategorie.innerHTML = ""
-    }
-}
-
 //Réintialisation des changements effectué sur la modale lorsqu'on la quitte
 function resetModal() {
     modaleTitre.innerText = "Galerie photo";
@@ -62,27 +45,32 @@ function resetModal() {
     btnValider.style.cursor = "";
     formulaireModale.style.display = "none";
     listeBoites.style.display = "";
-    ajoutRetour()
 }
 
 //Changement de status selon le bouton pressé
 btnModifier.addEventListener('click', function() {
     modal.style.display = "block";
-    ajoutRetour();
 });
 
 fermer.addEventListener('click', function() {
+    document.getElementById('step1').style.display = "block";
+    formulaireModale.style.display = "none";
     modal.style.display = "none";
     resetModal()
 });
 
 window.addEventListener('click', function(event) {
     if (event.target == modal) {
+        document.getElementById('step1').style.display = "block";
+        formulaireModale.style.display = "none";
         modal.style.display = "none";
         resetModal()
     }
 });
-btnRetour.addEventListener('click', resetModal)
+btnRetour.addEventListener('click', function(event) {
+    document.getElementById('step1').style.display = "block";
+    resetModal()
+});
 
 //Génération de la modale et ses changements de status
 const listeBoites = document.querySelector('.modale-liste-boites');
@@ -152,7 +140,6 @@ formValider.addEventListener('click', async (event) => {
     btnValider.style.cursor = "not-allowed";
     listeBoites.style.display = "none";
     formulaireModale.style.display = "block";
-    ajoutRetour();
 
 console.log(inputPhoto.value)
     console.log(inputTitre.value)
