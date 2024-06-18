@@ -17,8 +17,7 @@ const inputCategorie = document.getElementById('categorie');
 const inputPhoto = document.getElementById('photo-input')
 const inputFormulaire = [inputTitre, inputPhoto, inputCategorie];
 const userConnected = JSON.parse(localStorage.getItem('userConnected'));
-const token = JSON.parse(localStorage.getItem('userConnected')).token;
-const userId = userConnected.userId;
+const formValider = document.getElementById('ajout-photo-modale');
 
 let inputCategoryId = inputCategorie.value;
 
@@ -110,13 +109,14 @@ async function galleryModale() {
 
         // Suppression des work selon le bouton supprimer pressé
         iconeSupprimer.addEventListener('click', (event) => {
+            const token = JSON.parse(localStorage.getItem('userConnected')).token;
             const workId = boiteModale.dataset.id;
             // Vérifiez si l'utilisateur est connecté en utilisant la clé "Userconnected" dans le local storage
             if (userConnected) {
                 fetch(`http://localhost:5678/api/works/${workId}`, {
                     method: 'DELETE',
                     headers: {
-                        'Authorization':'Bearer ' + token
+                        Authorization: `Bearer ${token}`,
                     }
                 })
                     .then(response => {
@@ -143,7 +143,8 @@ btnValider.addEventListener('click', (event) => {
 })
 
 // Changement des élements de la modale après que le bouton "Ajouter une photo soit pressé"
-document.querySelector("form button").addEventListener('click', async (event) => {
+formValider.addEventListener('click', async (event) => {
+    const token = JSON.parse(localStorage.getItem('userConnected')).token;
     event.preventDefault()
     modaleTitre.innerText = "Ajout photo";
     btnValider.innerText = "Valider";
