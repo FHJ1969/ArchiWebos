@@ -12,7 +12,6 @@ let inputCategoryId = inputCategorie.value;
 
 //Génération de la gallery
 import { generationGallery } from './script.js';
-
 //Ajouts des options pour les catégories du formulaire
 
 const options = {};
@@ -122,7 +121,6 @@ btnValider.addEventListener('click', (event) => {
 
 // Changement des élements de la modale après que le bouton "Ajouter une photo soit pressé"
 const formValider = document.getElementById('ajout-photo-modale');
-
 formValider.addEventListener('click', async (event) => {
     const token = JSON.parse(localStorage.getItem('userConnected')).token;
     event.preventDefault()
@@ -134,7 +132,6 @@ formValider.addEventListener('click', async (event) => {
     formulaireModale.style.display = "block";
 
     const inputCategorie = document.getElementById('categorie');
-
     let inputCategoryId = inputCategorie.value
     // Créer un objet FormData à partir des valeurs des champs du formulaire
     if (inputPhoto.value && inputTitre.value && inputCategoryId) {
@@ -152,7 +149,6 @@ formValider.addEventListener('click', async (event) => {
                 },
                 body: formData,
             });
-
             if (response.ok) {
                 console.log("La boîte a été créée avec succès");
                 modal.style.display = "none";
@@ -187,7 +183,6 @@ inputFormulaire.forEach((input) => {
 
 //Ajout de la photo sélectionnée comme placeholder
 inputPhoto.addEventListener("change", function (event) {
-
     const photoUpload = document.querySelector('.photo-upload');
     const file = event.target.files[0];
     const reader = new FileReader();
