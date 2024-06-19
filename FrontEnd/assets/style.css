@@ -294,6 +294,9 @@ footer nav ul {
 	font-size: 26px;
 	margin: 0;
 }
+.formulaire-modale h3{
+	margin: 15px 0 40px;
+}
 
 .modal-content h4 {
 	font-family: "Syne";
@@ -318,9 +321,8 @@ footer nav ul {
 	width: 250px;
 	padding: 13px;
 	border-radius: 60px;
-	text-align: center;
 	cursor: pointer;
-	margin: 40px auto;
+	margin: 20px;
 	border: none;
 }
 
@@ -376,7 +378,7 @@ footer nav ul {
 /* Formulaire ajout photo */
 .formulaire-modale {
 	display: none;
-	margin: 20px auto;
+	margin: 10px auto;
 	width: 70%;
 }
 .label-photo {
@@ -435,4 +437,9 @@ footer nav ul {
 .fa-image{
 	color: #B9C5CC;
 	font-size: 76px;
+}
+#btn-formulaire {
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
