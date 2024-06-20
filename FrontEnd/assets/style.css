@@ -378,9 +378,14 @@ footer nav ul {
 /* Formulaire ajout photo */
 .formulaire-modale {
 	display: none;
-	margin: 10px auto;
+	margin: 5px auto;
 	width: 70%;
 }
+.form-header {
+	width: 37vw;
+	margin-left: calc(19% - 10vw);
+}
+
 .label-photo {
 	background-color: #CBD6DC;
 	padding: 10px 20px;
