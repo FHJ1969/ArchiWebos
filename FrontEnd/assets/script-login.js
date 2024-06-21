@@ -7,9 +7,16 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
     const email = emailInput.value;
     const mdp = mdpInput.value;
-    if (!email || !mdp ){
-        alert('Merci de saisir un mot de passe et un e-mail.');
+    const error = document.querySelector('.error');
+    if (!email && !mdp){
+        error.innerText = "Merci de saisir un e-mail et un mot de passe."
         return
+    } else if (!mdp && email){
+        error.innerText = "Merci de saisir un mot de passe."
+        return;
+    } else if (!email && mdp){
+        error.innerText = "Merci de saisir un e-mail"
+        return;
     }
     // Création d'un objet avec les valeurs de l'email et du mot de passe
     const userData = {
@@ -31,6 +38,7 @@ form.addEventListener('submit', (event) => {
             if (response.ok) {
                 return response.json();
             } else {
+                error.innerText = 'Erreur dans l’identifiant ou le mot de passe';
                 throw new Error('Erreur dans l’identifiant ou le mot de passe');
             }
         })
@@ -41,7 +49,6 @@ form.addEventListener('submit', (event) => {
 
         })
         .catch(error => {
-            // Afficher un message d'erreur si la connexion échoue
-            alert(error.message);
+            console.log(error);
         })
 });

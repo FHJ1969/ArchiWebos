@@ -20,3 +20,9 @@ footer {
     margin-top: 15em;
     width: 100%;
 }
+.error {
+    color: red;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
+}

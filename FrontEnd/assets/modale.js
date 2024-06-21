@@ -1,28 +1,19 @@
-//Définition des élements du DOM
+//Importation des fonctions
+import { generationGallery } from './script.js';
+import { resetModal } from './script.js';
+
+//Définition des élements du DOM récurrents
 const modal = document.getElementById('modal');
-const modaleTitre = document.querySelector('.modal-content h3');
 const btnValider = document.querySelector('.modal-content h4');
 const formValider = document.getElementById('ajout-photo-modale');
-const formulaireModale = document.querySelector('.formulaire-modale');
-const btnRetour = document.querySelector('.fa-arrow-left');
 const inputTitre = document.getElementById('titre')
 const inputCategorie = document.getElementById('categorie');
 const inputPhoto = document.getElementById('photo-input')
 const userConnected = JSON.parse(localStorage.getItem('userConnected'));
+const listeBoites = document.querySelector('.modale-liste-boites');
 let inputCategoryId = inputCategorie.value;
-//Génération de la gallery
-import { generationGallery } from './script.js';
 
 if (userConnected) {
-//Réintialisation des changements effectué sur la modale lorsqu'on la quitte
-    function resetModal() {
-        formulaireModale.style.display = "none";
-        listeBoites.style.display = "";
-        inputTitre.value = "";
-        document.getElementById('step1').style.display = "block";
-        inputCategorie.innerHTML = "";
-    }
-
 //Ajouts des options pour les catégories du formulaire
     const options = {};
     async function ajoutOptionsFormulaire() {
@@ -51,31 +42,24 @@ if (userConnected) {
     }
 
 //Changement de status selon le bouton pressé
-    const btnModifier = document.querySelector('.btn-modifier');
-    btnModifier.addEventListener('click', function() {
+    document.querySelector('.btn-modifier').addEventListener('click', function() {
         modal.style.display = "block";
     });
-
-    const fermer = document.querySelector(".fa-xmark");
-    fermer.addEventListener('click', function() {
+    document.querySelector('.fa-xmark').addEventListener('click', function() {
         modal.style.display = "none";
         resetModal()
     });
-
     window.addEventListener('click', function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
             resetModal()
         }
     });
-
-    btnRetour.addEventListener('click', function(event) {
+    document.querySelector('.fa-arrow-left').addEventListener('click', function(event) {
         resetModal()
     });
 
 //Génération de la modale et ses changements de status
-    const listeBoites = document.querySelector('.modale-liste-boites');
-
     async function galleryModale() {
         const responseWork = await fetch("http://localhost:5678/api/works");
         const works = await responseWork.json();
@@ -127,15 +111,16 @@ if (userConnected) {
     }
     btnValider.addEventListener('click', (event) => {
         document.getElementById('step1').style.display = "none";
-        formulaireModale.style.display = "block";
+        document.querySelector('.formulaire-modale').style.display = "block";
         ajoutOptionsFormulaire();
     })
 
 // Changement des élements de la modale après que le bouton "Ajouter une photo soit pressé"
     formValider.addEventListener('click', async (event) => {
+        const formulaireModale = document.querySelector('.formulaire-modale');
         const token = JSON.parse(localStorage.getItem('userConnected')).token;
         event.preventDefault()
-        modaleTitre.innerText = "Ajout photo";
+        document.querySelector('.modal-content h3').innerText = "Ajout photo";
         btnValider.innerText = "Valider";
         btnValider.style.backgroundColor = "#A7A7A7";
         btnValider.style.cursor = "not-allowed";
@@ -163,10 +148,10 @@ if (userConnected) {
                 if (response.ok) {
                     console.log("La boîte a été créée avec succès");
                     modal.style.display = "none";
-                    resetModal()
                     listeBoites.innerHTML = "";
                     generationGallery()
                     galleryModale()
+                    resetModal()
                 } else {
                     console.error("Erreur dans la création de la boîte");
                     modal.style.display = "none";

@@ -3,14 +3,12 @@ const responseCategories = await fetch("http://localhost:5678/api/categories");
 const categories = await responseCategories.json();
 
 // Récupération de la galerie et des filtres
-let gallery = document.querySelector(".gallery");
-let filtresContainer = document.querySelector(".liste-filtres");
-
 await generationFiltres();
 await generationGallery();
 
 // Création des éléments filtres
 function generationFiltres() {
+    const filtresContainer = document.querySelector(".liste-filtres");
     if (localStorage.getItem('userConnected') === null) {
         let filtreTous = document.createElement("button");
         filtreTous.classList.add("filtre", "filtre-all", "filtre-selection");
@@ -54,29 +52,6 @@ export async function generationGallery() {
     }
 }
 
-export async function galleryModale() {
-    const listeBoites = document.querySelector('.modale-liste-boites');
-    const responseWork = await fetch("http://localhost:5678/api/works");
-    const works = await responseWork.json();
-    for (let i = 0; i < works.length; i++) {
-        const boiteModale = document.createElement("figure");
-        boiteModale.classList.add("boite-modale");
-        listeBoites.appendChild(boiteModale);
-        boiteModale.dataset.categoryId = works[i].categoryId;
-        boiteModale.dataset.id = works[i].id;
-
-        const image = document.createElement("img");
-        image.src = works[i].imageUrl;
-        boiteModale.appendChild(image);
-
-        const iconeSupprimer = document.createElement("i");
-        iconeSupprimer.className = "fa-solid fa-trash-can";
-        iconeSupprimer.classList.add("icone-supprimer");
-        boiteModale.appendChild(iconeSupprimer);
-    }
-}
-
-
 //Affichage de la gallery approprié selon le filtre pressé
 function filterProject (event) {
         let categoryTargetId = event.target.dataset.categoryId;
@@ -92,4 +67,16 @@ function filterProject (event) {
                 boite.style.display = "none";
             }
         })
+}
+
+export function resetModal() {
+    const btnValider = document.querySelector('.modal-content h4');
+    document.querySelector('.formulaire-modale').style.display = "none";
+    btnValider.innerText = "Ajouter une photo";
+    btnValider.style.backgroundColor = "#1D6154";
+    btnValider.style.cursor = "pointer";
+    document.querySelector('.modale-liste-boites').style.display = "";
+    document.getElementById('titre').value = "";
+    document.getElementById('categorie').innerHTML = "";
+    document.getElementById('step1').style.display = "block";
 }
