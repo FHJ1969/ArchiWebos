@@ -32,12 +32,12 @@ if (userConnected) {
     }
 //Changement de couleur et de curseur pour le bouton valider selon le status des éléments du formulaire de la modale
     function couleurBtnValider() {
-        if (inputPhoto.files[0] != null && inputTitre.value != null && inputCategoryId != null) {
+        if (inputTitre.value != null && inputCategoryId != null && inputPhoto.files[0] != null) {
             formValider.style.backgroundColor = "#1d6154";
             formValider.style.cursor = "pointer";
         } else {
-            formValider.style.backgroundColor = "#A7A7A7";
-            formValider.style.cursor = "not-allowed";
+            formValider.style.backgroundColor = "";
+            formValider.style.cursor = "";
         }
     }
 
@@ -190,19 +190,4 @@ if (userConnected) {
         reader.readAsDataURL(file);
     });
     galleryModale();
-}
-
-function placeholderPhoto(event){
-    const photoUpload = document.querySelector('.photo-upload');
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function (event) {
-        const img = document.createElement("img");
-        img.src = event.target.result;
-        img.classList.add("preview-img");
-        photoUpload.innerHTML = "";
-        photoUpload.appendChild(img);
-    };
-    reader.readAsDataURL(file);
 }

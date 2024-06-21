@@ -70,8 +70,34 @@ function filterProject (event) {
 }
 
 export function resetModal() {
-    const btnValider = document.querySelector('.modal-content h4');
+    const photoUpload = document.querySelector('.photo-upload');
+    photoUpload.innerHTML = "";
+    const contenuPhotoUpload = `<i class="fa-regular fa-image"></i>
+    <label class="label-photo" for="photo-input">+ Ajouter photo</label>
+    <input type="file" id="photo-input" name="filename" accept="image/gif, image/jpeg, image/png" hidden>
+    <p class="photo-format">jpg, png de 4mo max</p>`;
+    photoUpload.innerHTML = contenuPhotoUpload
+
+    const inputPhoto = document.getElementById("photo-input");
+    inputPhoto.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            const img = document.createElement("img");
+            img.src = event.target.result;
+            img.classList.add("preview-img");
+            photoUpload.innerHTML = "";
+            photoUpload.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    });
+
+    const formValider = document.getElementById('ajout-photo-modale');
+    formValider.style.backgroundColor = ""
+    formValider.style.cursor = "";
     document.querySelector('.formulaire-modale').style.display = "none";
+    const btnValider = document.querySelector('.modal-content h4');
     btnValider.innerText = "Ajouter une photo";
     btnValider.style.backgroundColor = "#1D6154";
     btnValider.style.cursor = "pointer";
