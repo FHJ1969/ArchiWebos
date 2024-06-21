@@ -15,7 +15,7 @@ form.addEventListener('submit', (event) => {
         error.innerText = "Merci de saisir un mot de passe."
         return;
     } else if (!email && mdp){
-        error.innerText = "Merci de saisir un e-mail"
+        error.innerText = "Merci de saisir un e-mail."
         return;
     }
     // Création d'un objet avec les valeurs de l'email et du mot de passe
@@ -38,8 +38,8 @@ form.addEventListener('submit', (event) => {
             if (response.ok) {
                 return response.json();
             } else {
-                error.innerText = 'Erreur dans l’identifiant ou le mot de passe';
-                throw new Error('Erreur dans l’identifiant ou le mot de passe');
+                error.innerText = 'Erreur dans l’identifiant ou le mot de passe.';
+                throw new Error('Erreur dans l’identifiant ou le mot de passe.');
             }
         })
         .then(data => {

@@ -1,18 +1,14 @@
-const reponseWork = await fetch("http://localhost:5678/api/works");
-const work = await reponseWork.json();
 const loginElement = document.querySelector('.login');
-const listeFiltres = document.querySelector('.liste-filtres');
 const modifierHeader = document.querySelector('.modifier-header');
 displayAdmin()
 
 function changementsAdmin () {
-    const header = document.querySelector('header');
     const mesProjets = document.querySelector('#portfolio h2');
 
-    header.style.marginTop = "100px";
+    document.querySelector('header').style.marginTop = "100px";
     loginElement.innerText = "logout";
     loginElement.href = "index.html";
-    listeFiltres.style.display = "none";
+    document.querySelector('.liste-filtres').style.display = "none";
     mesProjets.style.marginLeft = "3.5em";
 
     //Bouton modifier pour ouvrir la modale à côté du titre
@@ -40,15 +36,12 @@ function changementsAdmin () {
     modifierHeader.appendChild(modifierTexteHeader);
 }
 
-
 function displayAdmin(){
-    const header = document.querySelector('header');
     if (localStorage.getItem('userConnected')) {
-        //Eléments modifié avec le passage en page admin
         changementsAdmin()
     } else {
         //Affichage normal si non connecté
-        header.style.marginTop = "50px";
+        document.querySelector('header').style.marginTop = "50px";
         loginElement.innerText = "login"
         loginElement.href = "index-login.html";
         modifierHeader.style.display = "none";
