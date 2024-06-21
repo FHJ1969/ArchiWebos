@@ -1,6 +1,6 @@
 const loginElement = document.querySelector('.login');
 const modifierHeader = document.querySelector('.modifier-header');
-displayAdmin()
+displayAdmin();
 
 function changementsAdmin () {
     const mesProjets = document.querySelector('#portfolio h2');

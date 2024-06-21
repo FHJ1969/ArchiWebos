@@ -19,7 +19,7 @@ if (userConnected) {
     async function ajoutOptionsFormulaire() {
         const reponseCategories = await fetch("http://localhost:5678/api/categories");
         const categories = await reponseCategories.json();
-        const placeholderOptions = '<option value="" disabled selected></option>'
+        const placeholderOptions = '<option value="" disabled selected></option>';
         inputCategorie.innerHTML = placeholderOptions;
 
         for (let i = 0; i < categories.length; i++) {
@@ -97,9 +97,9 @@ if (userConnected) {
                     })
                         .then(response => {
                             if (response.ok) {
-                                console.log("Suppression réussie.")
+                                console.log("Suppression réussie.");
                                 listeBoites.innerHTML = "";
-                                generationGallery()
+                                generationGallery();
                                 galleryModale()
                             } else {
                                 console.error('Erreur dans la suppression:', response);
@@ -122,7 +122,7 @@ if (userConnected) {
     formValider.addEventListener('click', async (event) => {
         const formulaireModale = document.querySelector('.formulaire-modale');
         const token = JSON.parse(localStorage.getItem('userConnected')).token;
-        event.preventDefault()
+        event.preventDefault();
         document.querySelector('.modal-content h3').innerText = "Ajout photo";
         btnValider.innerText = "Valider";
         btnValider.style.backgroundColor = "#A7A7A7";
@@ -131,7 +131,7 @@ if (userConnected) {
         formulaireModale.style.display = "block";
 
         const inputCategorie = document.getElementById('categorie');
-        let inputCategoryId = inputCategorie.value
+        let inputCategoryId = inputCategorie.value;
         // Créer un objet FormData à partir des valeurs des champs du formulaire
         if (inputPhoto.value && inputTitre.value && inputCategoryId) {
             const formData = new FormData();
@@ -152,8 +152,8 @@ if (userConnected) {
                     console.log("La boîte a été créée avec succès");
                     modal.style.display = "none";
                     listeBoites.innerHTML = "";
-                    generationGallery()
-                    galleryModale()
+                    generationGallery();
+                    galleryModale();
                     resetModal()
                 } else {
                     console.error("Erreur dans la création de la boîte");
@@ -170,7 +170,7 @@ if (userConnected) {
     const inputFormulaire = [inputTitre,inputCategorie,inputPhoto];
     inputFormulaire.forEach((input) => {
         input.addEventListener("input", (event) => {
-            couleurBtnValider();
+            couleurBtnValider()
         });
     });
 

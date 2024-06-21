@@ -9,13 +9,13 @@ form.addEventListener('submit', (event) => {
     const mdp = mdpInput.value;
     const error = document.querySelector('.error');
     if (!email && !mdp){
-        error.innerText = "Merci de saisir un e-mail et un mot de passe."
+        error.innerText = "Merci de saisir un e-mail et un mot de passe.";
         return
     } else if (!mdp && email){
-        error.innerText = "Merci de saisir un mot de passe."
+        error.innerText = "Merci de saisir un mot de passe.";
         return;
     } else if (!email && mdp){
-        error.innerText = "Merci de saisir un e-mail."
+        error.innerText = "Merci de saisir un e-mail.";
         return;
     }
     // Création d'un objet avec les valeurs de l'email et du mot de passe

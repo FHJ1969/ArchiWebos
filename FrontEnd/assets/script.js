@@ -15,7 +15,7 @@ function generationFiltres() {
         filtreTous.dataset.categoryId = "";
         filtreTous.innerText = "Tous";
         filtreTous.type = "button";
-        filtreTous.addEventListener("click", filterProject )
+        filtreTous.addEventListener("click", filterProject );
         filtresContainer.appendChild(filtreTous);
 
         for (let i = 0; i < categories.length; i++) {
@@ -41,7 +41,7 @@ export async function generationGallery() {
         let boite = document.createElement("figure");
         gallery.appendChild(boite);
         //boite.classList.add("boite", "boite-" + works[i].categoryId);
-        boite.dataset.categoryId = works[i].categoryId
+        boite.dataset.categoryId = works[i].categoryId;
         let image = document.createElement("img");
         image.src = works[i].imageUrl;
         boite.appendChild(image);
@@ -76,7 +76,7 @@ export function resetModal() {
     <label class="label-photo" for="photo-input">+ Ajouter photo</label>
     <input type="file" id="photo-input" name="filename" accept="image/gif, image/jpeg, image/png" hidden>
     <p class="photo-format">jpg, png de 4mo max</p>`;
-    photoUpload.innerHTML = contenuPhotoUpload
+    photoUpload.innerHTML = contenuPhotoUpload;
 
     const inputPhoto = document.getElementById("photo-input");
     inputPhoto.addEventListener("change", function (event) {
@@ -94,7 +94,7 @@ export function resetModal() {
     });
 
     const formValider = document.getElementById('ajout-photo-modale');
-    formValider.style.backgroundColor = ""
+    formValider.style.backgroundColor = "";
     formValider.style.cursor = "";
     document.querySelector('.formulaire-modale').style.display = "none";
     const btnValider = document.querySelector('.modal-content h4');
