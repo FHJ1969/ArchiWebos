@@ -98,7 +98,6 @@ if (userConnected) {
                         .then(response => {
                             if (response.ok) {
                                 console.log("Suppression réussie.")
-                                modal.style.display = "none";
                                 listeBoites.innerHTML = "";
                                 generationGallery()
                                 galleryModale()
@@ -191,4 +190,19 @@ if (userConnected) {
         reader.readAsDataURL(file);
     });
     galleryModale();
+}
+
+function placeholderPhoto(event){
+    const photoUpload = document.querySelector('.photo-upload');
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        const img = document.createElement("img");
+        img.src = event.target.result;
+        img.classList.add("preview-img");
+        photoUpload.innerHTML = "";
+        photoUpload.appendChild(img);
+    };
+    reader.readAsDataURL(file);
 }

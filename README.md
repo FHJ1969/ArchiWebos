@@ -9,5 +9,4 @@ Code du projet 3 de développeur web.
 
 # Taches à effectuer 
 
- - Factoriser les long code 
- - Régler les bugs d'affichage des éléments de la modale
+ - 
