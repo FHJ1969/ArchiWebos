@@ -46,6 +46,12 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+	-webkit-box-shadow: 2px 4px 9px #E8F1F6; !important;
+}
 /** end reset css**/
 body {
 	max-width: 1140px;
@@ -292,10 +298,10 @@ footer nav ul {
 .modal-content h3 {
 	text-align: center;
 	font-size: 26px;
-	margin: 0;
+	margin: 20px 0 0;
 }
 .formulaire-modale h3{
-	margin: 15px 0 40px;
+	margin: 25px 0 40px;
 }
 
 .modal-content h4 {
@@ -316,12 +322,12 @@ footer nav ul {
 	font-family: "Syne";
 	font-weight: bold;
 	font-size: 14px;
-	background-color: #1d6154;
+	background-color: #A7A7A7;
 	color: white;
 	width: 250px;
 	padding: 13px;
 	border-radius: 60px;
-	cursor: pointer;
+	cursor: not-allowed;
 	margin: 20px;
 	border: none;
 }
@@ -378,12 +384,12 @@ footer nav ul {
 /* Formulaire ajout photo */
 .formulaire-modale {
 	display: none;
-	margin: 5px auto;
+	margin: 15px auto;
 	width: 70%;
 }
 .form-header {
-	width: 37vw;
-	margin-left: calc(19% - 10vw);
+	width: 36vw;
+	margin-left: calc(20% - 10vw);
 }
 
 .label-photo {
@@ -421,6 +427,7 @@ footer nav ul {
 }
 .div-categorie {
 	border-bottom: 1px solid #B3B3B3;
+	padding-bottom: 40px;q
 }
 .photo-upload {
 	position: relative;
