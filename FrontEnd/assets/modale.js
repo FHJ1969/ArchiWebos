@@ -45,7 +45,11 @@ if (userConnected) {
     document.querySelector('.btn-modifier').addEventListener('click', function() {
         modal.style.display = "block";
     });
-    document.querySelector('.fa-xmark').addEventListener('click', function() {
+    document.querySelector('.fermer-modal').addEventListener('click', function() {
+        modal.style.display = "none";
+        resetModal()
+    });
+    document.querySelector('.fermer-form').addEventListener('click', function() {
         modal.style.display = "none";
         resetModal()
     });

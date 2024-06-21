@@ -46,12 +46,6 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
-	-webkit-box-shadow: 2px 4px 9px #E8F1F6; !important;
-}
 /** end reset css**/
 body {
 	max-width: 1140px;
@@ -387,12 +381,14 @@ footer nav ul {
 /* Formulaire ajout photo */
 .formulaire-modale {
 	display: none;
-	margin: 15px auto;
+	margin: 0 auto;
 	width: 70%;
+	margin-bottom: 20px;
 }
 .form-header {
-	width: 36vw;
-	margin-left: calc(20% - 10vw);
+	width: 36.8vw;
+	margin-left: calc(19% - 10vw);
+	margin-top: 5px;
 }
 
 .label-photo {
